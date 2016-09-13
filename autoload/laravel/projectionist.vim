@@ -38,7 +38,7 @@ function! laravel#projectionist#append() abort
         \     "{close}",
         \   ],
         \ },
-        \ "app/Http/Controllers/*Controller.php": {
+        \ "app/Http/Controllers/*.php": {
         \   "type": "controller",
         \ },
         \ "app/Http/Controllers/Controller.php": {
@@ -72,10 +72,10 @@ function! laravel#projectionist#append() abort
         \ "app/Exceptions/Handler.php": {
         \   "type": "exception",
         \ },
-        \ "app/Providers/*ServiceProvider.php": {
+        \ "app/Providers/*.php": {
         \   "type": "provider",
         \ },
-        \ "database/factories/*Factory.php": {
+        \ "database/factories/*.php": {
         \   "type": "factory",
         \ },
         \ "database/factories/ModelFactory.php": {
@@ -84,13 +84,13 @@ function! laravel#projectionist#append() abort
         \ "database/migrations/*.php": {
         \   "type": "migration",
         \ },
-        \ "database/seeds/*Seeder.php": {
+        \ "database/seeds/*.php": {
         \   "type": "seeder",
         \ },
         \ "database/seeds/DatabaseSeeder.php": {
         \   "type": "seeder",
         \ },
-        \ "tests/*Test.php": {
+        \ "tests/*.php": {
         \   "type": "test",
         \ },
         \ "tests/TestCase.php": {
