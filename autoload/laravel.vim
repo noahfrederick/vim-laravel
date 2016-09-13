@@ -99,8 +99,27 @@ function! s:app_config_path(...) dict abort
   return join([self._root, 'config'] + a:000, '/')
 endfunction
 
+""
+" Get absolute path to migrations directory, optionally with [path] appended.
+function! s:app_migrations_path(...) dict abort
+  return join([self._root, 'database/migrations'] + a:000, '/')
+endfunction
+
+""
+" Translate migration name to path.
+function! s:app_find_migration(slug) dict abort
+  let candidates = glob(self.migrations_path('*_'.a:slug.'.php'), 1, 1)
+  return (empty(candidates) ? '' : remove(candidates, -1))
+endfunction
+
+""
+" Expand migration slug to full name with timestamp.
+function! s:app_expand_migration(slug) dict abort
+  return fnamemodify(self.find_migration(a:slug), ':t:r')
+endfunction
+
 call s:add_methods('app', ['has_dir', 'has_file', 'has_path'])
-call s:add_methods('app', ['path', 'src_path', 'config_path'])
+call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path', 'find_migration', 'expand_migration'])
 
 ""
 " Detect app's namespace
@@ -315,7 +334,7 @@ function! laravel#buffer_setup() abort
   ""
   " @command Artisan[!] [arguments]
   " Invoke Artisan with [arguments] (with intelligent completion).
-  command! -buffer -bang -bar -nargs=? -complete=customlist,laravel#artisan#complete
+  command! -buffer -bang -bar -nargs=* -complete=customlist,laravel#artisan#complete
         \ Artisan execute laravel#artisan#exec(<q-bang>, <f-args>)
 
   silent doautocmd User Laravel
