@@ -1,0 +1,40 @@
+*laravel.txt*	Vim support for Laravel/Lumen 5+ projects
+Noah Frederick                                         *Laravel.vim* *laravel*
+
+==============================================================================
+CONTENTS                                                    *laravel-contents*
+  1. Introduction..............................................|laravel-intro|
+  2. Commands...............................................|laravel-commands|
+  3. About.....................................................|laravel-about|
+
+==============================================================================
+INTRODUCTION                                                   *laravel-intro*
+
+Laravel.vim provides conveniences for working with Laravel/Lumen projects.
+Some features include:
+
+  * The |:Artisan| command wraps artisan with intelligent completion.
+  * Includes projections for projectionist.vim.
+  * Use |:Console| to fire up a REPL (artisan tinker).
+
+This plug-in is only available if 'compatible' is not set.
+
+==============================================================================
+COMMANDS                                                    *laravel-commands*
+
+:Artisan[!] [arguments]                                             *:Artisan*
+  Invoke Artisan with [arguments] (with intelligent completion).
+
+==============================================================================
+ABOUT                                                          *laravel-about*
+
+Laravel.vim is distributed under the same terms as Vim itself (see |license|)
+
+You can find the latest version of this plug-in on GitHub:
+https://github.com/noahfrederick/vim-laravel
+
+Please report issues on GitHub as well:
+https://github.com/noahfrederick/vim-laravel/issues
+
+
+vim:tw=78:ts=8:ft=help:norl:

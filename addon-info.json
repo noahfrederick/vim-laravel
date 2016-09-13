@@ -1,0 +1,7 @@
+{
+	"name":        "laravel",
+	"version":     "0.0.0",
+	"author":      "Noah Frederick",
+	"description": "Vim support for Laravel/Lumen 5+ projects",
+	"homepage":    "https://github.com/noahfrederick/vim-laravel"
+}

@@ -1,0 +1,5 @@
+language: ruby
+bundler_args: --without development
+rvm:
+  - 2.2.1
+script: rake ci
