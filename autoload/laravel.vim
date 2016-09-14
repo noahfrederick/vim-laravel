@@ -124,15 +124,19 @@ call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path',
 ""
 " Detect app's namespace
 function! s:app_detect_namespace() abort dict
-  let paths = composer#query('autoload.psr-4')
+  try
+    let paths = composer#query('autoload.psr-4')
 
-  for [namespace, path] in items(paths)
-    if self.has_path(path)
-      return namespace[0:-2]
-    endif
-  endfor
+    for [namespace, path] in items(paths)
+      if self.has_path(path)
+        return namespace[0:-2]
+      endif
+    endfor
+  catch /^Vim\%((\a\+)\)\=:E117/
+    " Fall through when composer.vim isn't available
+  endtry
 
-  call s:throw('unable to detect application namespace')
+  return 'App'
 endfunction
 
 ""

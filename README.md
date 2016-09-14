@@ -45,10 +45,9 @@ Vim support for [Laravel/Lumen 5+][laravel] projects.
 
 ## Installation
 
-Laravel.vim depends on [composer.vim][vim-composer] and has an optional
-dependency on [dispatch.vim][dispatch] for asynchronous execution of commands
-and an optional dependency on [projectionist.vim][projectionist] for the
-navigation commands:
+Laravel.vim has optional dependencies on [composer.vim][vim-composer],
+[dispatch.vim][dispatch] (the `:Console` command), and
+[projectionist.vim][projectionist] (navigation commands):
 
 	Plug 'tpope/vim-dispatch'
 	Plug 'tpope/vim-projectionist'
