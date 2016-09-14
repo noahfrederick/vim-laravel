@@ -21,6 +21,13 @@ function! laravel#projectionist#append() abort
         \ },
         \ "config/*.php": {
         \   "type": "config",
+        \   "template": [
+        \     "<?php",
+        \     "",
+        \     "return [",
+        \     "    //",
+        \     "];",
+        \   ],
         \ },
         \ "config/app.php": {
         \   "type": "config",
@@ -40,6 +47,16 @@ function! laravel#projectionist#append() abort
         \ },
         \ "app/Http/Controllers/*.php": {
         \   "type": "controller",
+        \   "template": [
+        \     "<?php",
+        \     "",
+        \     "namespace {namespace};",
+        \     "",
+        \     "class {basename} extends Controller",
+        \     "{open}",
+        \     "    //",
+        \     "{close}",
+        \   ],
         \ },
         \ "app/Http/Controllers/Controller.php": {
         \   "type": "controller",
@@ -154,6 +171,18 @@ function! laravel#projectionist#append() abort
   if laravel#app().has('models')
     let projections["app/Models/*.php"] = {
           \   "type": "model",
+          \   "template": [
+          \     "<?php",
+          \     "",
+          \     "namespace {namespace};",
+          \     "",
+          \     "use Illuminate\Database\Eloquent\Model;",
+          \     "",
+          \     "class {basename} extends Model",
+          \     "{open}",
+          \     "    //",
+          \     "{close}",
+          \   ],
           \ }
   endif
 
