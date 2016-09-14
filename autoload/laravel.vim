@@ -158,20 +158,37 @@ endfunction
 
 ""
 " Detect existence of {feature} in the current app.
-" Adapted from rails.vim.
-"
-" TODO:
-" - laravel
-" - laravel5
-" - laravel5.2
-" - lumen
-" - lumen5
-" - lumen5.0
-" - lumen5.1
-" - lumen5.2
-" - lumen5.3
-"
 function! s:app_has(feature) abort dict
+  if a:feature =~# '\v^(laravel|lumen)'
+    return s:has_framework(a:feature)
+  endif
+
+  return s:has_feature_by_path(self, a:feature)
+endfunction
+
+function! s:has_framework(feature)
+  if a:feature =~# '^laravel'
+    let package = 'laravel/framework'
+    let constraint = substitute(a:feature, '^laravel', '', '')
+  elseif a:feature =~# '^lumen'
+    let package = 'laravel/lumen-framework'
+    let constraint = substitute(a:feature, '^lumen', '', '')
+  else
+    return 0
+  endif
+
+  try
+    let ver = composer#query('require.' . package)
+  catch /^Vim\%((\a\+)\)\=:E117/
+    return 0
+  endtry
+
+  let constraint = '^[^0-9]*' . escape(constraint, '.')
+
+  return !empty(ver) && match(ver, constraint) >= 0
+endfunction
+
+function! s:has_feature_by_path(app, feature)
   let map = {
         \ 'artisan': 'artisan',
         \ 'commands': 'app/Commands/',
@@ -179,9 +196,6 @@ function! s:app_has(feature) abort dict
         \ 'gulp': 'gulpfile.js',
         \ 'handlers': 'app/Handlers/',
         \ 'jobs': 'app/Jobs/',
-        \ 'laravel5.0': 'app/Commands/|app/Handlers/',
-        \ 'laravel5.1': 'app/Jobs/|app/Listeners/',
-        \ 'laravel5.3': 'routes/',
         \ 'listeners': 'app/Listeners/',
         \ 'models': 'app/Models/',
         \ 'policies': 'app/Policies/',
@@ -190,7 +204,7 @@ function! s:app_has(feature) abort dict
 
   let path = get(map, a:feature, a:feature.'/')
 
-  return !empty(filter(split(path, '|'), 'self.has_path(v:val)'))
+  return !empty(filter(split(path, '|'), 'a:app.has_path(v:val)'))
 endfunction
 
 call s:add_methods('app', ['detect_namespace', 'namespace', 'has'])
