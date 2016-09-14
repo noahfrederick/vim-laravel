@@ -78,9 +78,9 @@ function! laravel#artisan#exec(...) abort
   "   execute 'lcd' fnameescape(laravel#app().path())
   "   execute 'terminal' laravel#app().makeprg() join(args)
   " else
-    let cwd = s:cd(laravel#app().path())
-    execute '!' . laravel#app().makeprg() join(args)
-    call s:cd(cwd)
+  let cwd = s:cd(laravel#app().path())
+  execute '!' . laravel#app().makeprg() join(args)
+  call s:cd(cwd)
   " endif
 
   call s:artisan_doautocmd(args, bang, v:shell_error)
@@ -110,10 +110,12 @@ endfunction
 
 augroup laravel_artisan
   autocmd!
-  autocmd User Artisan nested
-        \ if g:artisan.status == 0 && g:artisan.namespace ==# 'make' |
-        \   execute s:artisan_edit(g:artisan) |
-        \ endif
+  if exists('g:loaded_projectionist')
+    autocmd User Artisan nested
+          \ if g:artisan.status == 0 && g:artisan.namespace ==# 'make' |
+          \   execute s:artisan_edit(g:artisan) |
+          \ endif
+  endif
 augroup END
 
 ""
