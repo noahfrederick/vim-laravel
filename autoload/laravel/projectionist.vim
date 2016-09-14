@@ -70,12 +70,6 @@ function! laravel#projectionist#append() abort
         \ "app/Http/Requests/*.php": {
         \   "type": "request",
         \ },
-        \ "app/Console/Commands/*.php": {
-        \   "type": "command",
-        \ },
-        \ "app/Console/Kernal.php": {
-        \   "type": "command",
-        \ },
         \ "app/Events/*.php": {
         \   "type": "event",
         \   "alternate": "app/Listeners/{}.php",
@@ -150,9 +144,25 @@ function! laravel#projectionist#append() abort
     let projections["app/Jobs/Job.php"] = {
           \   "type": "job",
           \ }
+
+    let projections["app/Console/Commands/*.php"] = {
+          \   "type": "command",
+          \ }
+
+    let projections["app/Console/Kernal.php"] = {
+          \   "type": "command",
+          \ }
   elseif laravel#app().has('commands')
     let projections["app/Commands/*.php"] = {
           \   "type": "command",
+          \ }
+
+    let projections["app/Console/Commands/*.php"] = {
+          \   "type": "console",
+          \ }
+
+    let projections["app/Console/Kernal.php"] = {
+          \   "type": "console",
           \ }
   endif
 
