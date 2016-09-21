@@ -129,7 +129,7 @@ function! s:artisan_edit(command) abort
     return ''
   elseif a:command.name ==# 'console'
     let type = 'command'
-  elseif a:command.name ==# 'model' && !laravel#app().has('models')
+  elseif a:command.name ==# 'model'
     let type = 'lib'
   else
     let type = a:command.name
