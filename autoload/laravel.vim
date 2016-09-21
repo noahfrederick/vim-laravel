@@ -31,20 +31,18 @@ let s:apps = {}
 " Get the app object belonging to the current app root, or that
 " of [root]. Initializes the app if not initialized.
 function! laravel#app(...) abort
-  let dir = get(a:000, 0, exists('b:laravel_root') && b:laravel_root !=# '' ? b:laravel_root : '')
+  let root = get(a:000, 0, exists('b:laravel_root') && b:laravel_root !=# '' ? b:laravel_root : '')
 
-  if dir !=# ''
-    if has_key(s:apps, dir)
-      let app = get(s:apps, dir)
-    else
-      let app = {'_root': dir}
-      let s:apps[dir] = app
-    endif
-
-    return extend(app, s:app_prototype, 'keep')
+  if empty(root)
+    return {}
   endif
 
-  return {}
+  if !has_key(s:apps, root)
+    let s:apps[root] = deepcopy(s:app_prototype)
+    let s:apps[root]._root = root
+  endif
+
+  return get(s:apps, root, {})
 endfunction
 
 ""
