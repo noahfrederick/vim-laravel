@@ -274,13 +274,13 @@ endfunction
 
 call s:add_methods('app', ['makeprg'])
 
-let s:cache_prototype = {'cache': {}}
+let s:cache_prototype = {'_dict': {}}
 
 function! s:cache_clear(...) dict abort
   if a:0 == 0
-    let self.cache = {}
-  elseif has_key(self, 'cache') && has_key(self.cache, a:1)
-    unlet! self.cache[a:1]
+    let self._dict = {}
+  elseif has_key(self, '_dict') && has_key(self._dict, a:1)
+    unlet! self._dict[a:1]
   endif
 endfunction
 
@@ -292,22 +292,22 @@ endfunction
 
 function! s:cache_get(...) dict abort
   if a:0 == 0
-    return self.cache
+    return self._dict
   else
-    return self.cache[a:1]
+    return self._dict[a:1]
   endif
 endfunction
 
 function! s:cache_set(key, value) dict abort
-  let self.cache[a:key] = a:value
+  let self._dict[a:key] = a:value
 endfunction
 
 function! s:cache_has(key) dict abort
-  return has_key(self.cache, a:key)
+  return has_key(self._dict, a:key)
 endfunction
 
 function! s:cache_needs(key) dict abort
-  return !has_key(self.cache, a:key)
+  return !has_key(self._dict, a:key)
 endfunction
 
 call s:add_methods('cache', ['clear', 'get', 'set', 'has', 'needs'])
