@@ -64,7 +64,7 @@ function! laravel#projectionist#append() abort
         \ "app/Http/Middleware/*.php": {
         \   "type": "middleware",
         \ },
-        \ "app/Http/Kernal.php": {
+        \ "app/Http/Kernel.php": {
         \   "type": "middleware",
         \ },
         \ "app/Http/Requests/*.php": {
@@ -149,7 +149,7 @@ function! laravel#projectionist#append() abort
           \   "type": "command",
           \ }
 
-    let projections["app/Console/Kernal.php"] = {
+    let projections["app/Console/Kernel.php"] = {
           \   "type": "command",
           \ }
   elseif laravel#app().has('commands')
@@ -161,7 +161,7 @@ function! laravel#projectionist#append() abort
           \   "type": "console",
           \ }
 
-    let projections["app/Console/Kernal.php"] = {
+    let projections["app/Console/Kernel.php"] = {
           \   "type": "console",
           \ }
   endif
@@ -206,12 +206,12 @@ function! laravel#projectionist#append() abort
   if laravel#app().has('routes')
     let projections["routes/*.php"] = {
           \   "type": "routes",
-          \   "alternate": "app/Http/Kernal.php",
+          \   "alternate": "app/Http/Kernel.php",
           \ }
   else
     let projections["app/Http/routes.php"] = {
           \   "type": "routes",
-          \   "alternate": "app/Http/Kernal.php",
+          \   "alternate": "app/Http/Kernel.php",
           \ }
   endif
 
