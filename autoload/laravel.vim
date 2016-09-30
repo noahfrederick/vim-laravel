@@ -197,6 +197,7 @@ function! s:has_feature_by_path(app, feature)
         \ 'listeners': 'app/Listeners/',
         \ 'models': 'app/Models/',
         \ 'policies': 'app/Policies/',
+        \ 'scopes': 'app/Scopes/',
         \ 'traits': 'app/Traits/',
         \ }
 
