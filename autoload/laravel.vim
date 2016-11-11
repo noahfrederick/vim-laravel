@@ -149,8 +149,20 @@ function! s:app_views_path(...) dict abort
   return join([self._root, 'resources/views'] + a:000, '/')
 endfunction
 
+""
+" Get path to source root on the Homestead VM, optionally with [path] appended.
+function! s:app_homestead_path(...) dict abort
+  if self.cache.needs('homestead_root')
+    call self.cache.set('homestead_root', laravel#homestead#root(self._root))
+  endif
+
+  let root = self.cache.get('homestead_root')
+
+  return empty(root) ? '' : join([root] + a:000, '/')
+endfunction
+
 call s:add_methods('app', ['glob', 'has_dir', 'has_file', 'has_path'])
-call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path', 'find_migration', 'expand_migration', 'views_path'])
+call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path', 'find_migration', 'expand_migration', 'views_path', 'homestead_path'])
 
 ""
 " Detect app's namespace
@@ -565,6 +577,46 @@ function! laravel#buffer_commands() abort
   " Invoke Artisan with [arguments] (with intelligent completion).
   command! -buffer -bang -bar -nargs=* -complete=customlist,laravel#artisan#complete
         \ Artisan execute laravel#artisan#exec(<q-bang>, <f-args>)
+
+  ""
+  " @command Homestead {cmd}
+  " Invoke shell {cmd} on the Homestead VM over SSH.
+  "
+  " Several strategies for executing the ssh command in order:
+  "
+  " * Dispatch's |:Start| command
+  " * The built-in |:terminal|
+  " * At Vim's command line via |:!|
+  "
+  " The {cmd} is executed with the working directory being the project's
+  " directory on the VM. The project's directory is detected from your
+  " Homestead.json configuration file, using the "folders" mappings to do the
+  " translation from host path to guest path: >
+  "     "folders": [
+  "         {
+  "             "map": "~/code",
+  "             "to": "/home/vagrant/code"
+  "         }
+  "     ],
+  " <
+  "
+  " The plug-in will look for the Homestead.json file in the directory
+  " specified in @setting(laravel_homestead_dir) or in ~/Homestead.
+  "
+  " Note: Only Homestead.json is taken into account, and not Homestead.yaml,
+  " since Vim cannot parse YAML. If you prefer to use the Homestead.yaml file,
+  " it's sufficient to set only the "folders" array in Homestead.json.
+  "
+  " @command Homestead
+  " Start an interactive SSH session on the Homestead VM.
+  "
+  " @command Homestead! [arguments]
+  " Invoke Vagrant with [arguments] in the context of the Homestead directory
+  " on the host machine. For example, to start the VM: >
+  "     :Homestead! up
+  " <
+  command! -buffer -bang -bar -nargs=* -complete=shellcmd
+        \ Homestead execute laravel#homestead#exec(<q-bang>, <f-args>)
 endfunction
 
 ""

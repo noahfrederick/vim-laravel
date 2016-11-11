@@ -1,0 +1,20 @@
+Before (in a laravel buffer):
+  let g:laravel_homestead_dir = expand('test/fixtures')
+  tabedit test/fixtures/laravel-8/.env
+
+After (clean up buffer):
+  bdelete
+
+Execute (Detect Homestead app root):
+  AssertEqual laravel#homestead#root('/home/local/code/project'), '/home/vagrant/code/project'
+
+Execute (Invalid Homestead app root):
+  AssertEqual laravel#homestead#root('/home/local/invalid/project'), ''
+
+Execute (Access Homestead app root via app object):
+  " Fake the app root.
+  let b:app = deepcopy(laravel#app())
+  let b:app._root = '/home/local/code/project'
+
+  AssertEqual b:app.homestead_path(), '/home/vagrant/code/project'
+  AssertEqual b:app.homestead_path('public'), '/home/vagrant/code/project/public'
