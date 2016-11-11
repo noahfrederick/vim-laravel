@@ -22,13 +22,6 @@ The help doc can be rebuilt by running:
 
 	bundle exec rake doc
 
-## Automation
-
-If you wish, you may use the provided `Guardfile` to automatically run tests
-and rebuild the documentation as you make changes:
-
-	bundle exec guard start
-
 [vspec]: https://github.com/kana/vim-vspec
 [vim-flavor]: https://github.com/kana/vim-flavor
 [vimdoc]: https://github.com/google/vimdoc
