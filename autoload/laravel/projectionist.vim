@@ -113,6 +113,13 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'resources/lang/*.php': {
         \   'type': 'language',
+        \   'template': [
+        \     '<?php',
+        \     '',
+        \     'return [',
+        \     '    //',
+        \     '];',
+        \   ],
         \ },
         \ 'resources/assets/*': {
         \   'type': 'asset',
