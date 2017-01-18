@@ -14,7 +14,11 @@ function! laravel#goto#filetype_php() abort
   let path = laravel#goto#language()
   if !empty(path) | return 'Elanguage '.path | endif
 
-  "TODO: composer class finder here
+  try
+    let cmd = composer#autoload#find()
+    if !empty(cmd) | return cmd | endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+  endtry
 
   return 'normal! gf'
 endfunction
@@ -35,7 +39,11 @@ function! laravel#goto#filetype_blade() abort
   let path = laravel#goto#language()
   if !empty(path) | return 'Elanguage '.path | endif
 
-  "TODO: composer class finder here
+  try
+    let cmd = composer#autoload#find()
+    if !empty(cmd) | return cmd | endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+  endtry
 
   return 'normal! gf'
 endfunction
