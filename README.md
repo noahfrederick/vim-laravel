@@ -39,6 +39,7 @@ Vim support for [Laravel/Lumen 5+][laravel] projects. [![Release][release]](http
 | `:Etest`              | All class files under `test/`  |
 | `:Eview`              | Blade templates                |
 
+* Enhanced `gf` command works on class names, template names, config and translation keys.
 * Use `:Console` to fire up a REPL (`artisan tinker`).
 
 ## Installation
