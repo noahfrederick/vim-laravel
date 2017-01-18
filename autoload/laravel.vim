@@ -348,13 +348,36 @@ endfunction
 " @private
 " Set up Laravel buffers
 function! laravel#buffer_setup() abort
+  call laravel#buffer_commands()
+  call laravel#buffer_mappings()
+
+  silent doautocmd User Laravel
+endfunction
+
+""
+" @private
+" Set up commands for Laravel buffers
+function! laravel#buffer_commands() abort
   ""
   " @command Artisan[!] [arguments]
   " Invoke Artisan with [arguments] (with intelligent completion).
   command! -buffer -bang -bar -nargs=* -complete=customlist,laravel#artisan#complete
         \ Artisan execute laravel#artisan#exec(<q-bang>, <f-args>)
+endfunction
 
-  silent doautocmd User Laravel
+""
+" @private
+" Set up mappings for Laravel buffers
+function! laravel#buffer_mappings() abort
+  if &filetype =~# 'php'
+    if hasmapto('<Plug>(laravel-goto-php)') | return 1 | endif
+    nmap <buffer> gf <Plug>(laravel-goto-php)
+  elseif &filetype =~# 'blade'
+    if hasmapto('<Plug>(laravel-goto-blade)') | return 1 | endif
+    nmap <buffer> gf <Plug>(laravel-goto-blade)
+  else
+    return 2
+  endif
 endfunction
 
 " Abbrevs

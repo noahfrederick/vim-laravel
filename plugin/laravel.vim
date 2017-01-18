@@ -74,6 +74,9 @@ augroup laravel_detect
         \ if s:laravel_detect() | call laravel#buffer_syntax() | endif
 augroup END
 
+nnoremap <Plug>(laravel-goto-php) :<C-u>execute laravel#goto#filetype_php()<CR>
+nnoremap <Plug>(laravel-goto-blade) :<C-u>execute laravel#goto#filetype_blade()<CR>
+
 " }}}
 " Projections {{{
 
