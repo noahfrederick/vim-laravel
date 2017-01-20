@@ -221,6 +221,10 @@ let s:artisan_flags = {
       \     '--database=',
       \     '--force',
       \   ],
+      \   'down': [
+      \     '--message=',
+      \     '--retry=',
+      \   ],
       \   'help': [
       \     '--format=',
       \     '--raw',
@@ -239,13 +243,17 @@ let s:artisan_flags = {
       \     '--command=',
       \   ],
       \   'make:controller': [
+      \     '--model=',
+      \     '-m',
       \     '--resource',
+      \     '-r',
       \   ],
       \   'make:job': [
       \     '--sync',
       \   ],
       \   'make:listener': [
       \     '--event=',
+      \     '-e',
       \     '--queued',
       \   ],
       \   'make:migration': [
@@ -255,6 +263,14 @@ let s:artisan_flags = {
       \   ],
       \   'make:model': [
       \     '--migration',
+      \     '-m',
+      \     '--controller',
+      \     '-c',
+      \     '--resource',
+      \     '-r',
+      \   ],
+      \   'make:policy': [
+      \     '--model=',
       \     '-m',
       \   ],
       \   'migrate': [
@@ -321,6 +337,9 @@ let s:artisan_flags = {
       \   'serve': [
       \     '--host=',
       \     '--port=',
+      \   ],
+      \   'tinker': [
+      \     '--include=',
       \   ],
       \   'vendor:publish': [
       \     '--force',
