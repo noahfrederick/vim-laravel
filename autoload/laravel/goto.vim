@@ -31,7 +31,10 @@ function! laravel#goto#filetype_blade() abort
   if !empty(path) | return 'Eview '.path | endif
 
   let path = laravel#goto#include()
-  if !empty(path) | return 'Econfig '.path | endif
+  if !empty(path) | return 'Eview '.path | endif
+
+  let path = laravel#goto#component()
+  if !empty(path) | return 'Eview '.path | endif
 
   let path = laravel#goto#config()
   if !empty(path) | return 'Econfig '.path | endif
@@ -83,6 +86,13 @@ endfunction
 " Capture view name at cursor
 function! laravel#goto#view() abort
   return s:find_name('\<view([''"]\([^''"]\+\)[''"][,)].*$')
+endfunction
+
+""
+" @private
+" Capture component name at cursor
+function! laravel#goto#component() abort
+  return s:find_name('@component([''"]\([^''"]\+\)[''"][,)].*$')
 endfunction
 
 ""
