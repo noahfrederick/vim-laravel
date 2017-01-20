@@ -27,13 +27,7 @@ endfunction
 " @private
 " Go to thing under cursor in Blade buffer
 function! laravel#goto#filetype_blade() abort
-  let path = laravel#goto#layout()
-  if !empty(path) | return 'Eview '.path | endif
-
-  let path = laravel#goto#include()
-  if !empty(path) | return 'Eview '.path | endif
-
-  let path = laravel#goto#component()
+  let path = laravel#goto#template()
   if !empty(path) | return 'Eview '.path | endif
 
   let path = laravel#goto#config()
@@ -90,23 +84,9 @@ endfunction
 
 ""
 " @private
-" Capture component name at cursor
-function! laravel#goto#component() abort
-  return s:find_name('@component([''"]\([^''"]\+\)[''"][,)].*$')
-endfunction
-
-""
-" @private
-" Capture include name at cursor
-function! laravel#goto#include() abort
-  return s:find_name('@include([''"]\([^''"]\+\)[''"][,)].*$')
-endfunction
-
-""
-" @private
-" Capture layout name at cursor
-function! laravel#goto#layout() abort
-  return s:find_name('@extends([''"]\([^''"]\+\)[''"][,)].*$')
+" Capture component, layout, or include name at cursor
+function! laravel#goto#template() abort
+  return s:find_name('@\%(component\|extends\|include\)([''"]\([^''"]\+\)[''"][,)].*$')
 endfunction
 
 ""
