@@ -104,7 +104,8 @@ function! s:app_migrations_path(...) dict abort
 endfunction
 
 ""
-" Translate migration name to path.
+" Translate migration name to path. In case multiple migrations share the
+" same name, return the most recent.
 function! s:app_find_migration(slug) dict abort
   let candidates = glob(self.migrations_path('*_'.a:slug.'.php'), 1, 1)
   return (empty(candidates) ? '' : remove(candidates, -1))
