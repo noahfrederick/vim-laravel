@@ -256,6 +256,10 @@ let s:artisan_flags = {
       \     '-e',
       \     '--queued',
       \   ],
+      \   'make:mail': [
+      \     '--markdown=',
+      \     '-m',
+      \   ],
       \   'make:migration': [
       \     '--create=',
       \     '--table=',
