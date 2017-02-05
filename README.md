@@ -36,7 +36,7 @@ Vim support for [Laravel/Lumen 5+][laravel] projects. [![Release][release]](http
 | `:Erequest`           | HTTP form requests             |
 | `:Eroutes`            | HTTP routes files              |
 | `:Eseeder`            | Database seeders               |
-| `:Etest`              | All class files under `test/`  |
+| `:Etest`              | All class files under `tests/` |
 | `:Eview`              | Blade templates                |
 
 * Enhanced `gf` command works on class names, template names, config and translation keys.

@@ -136,12 +136,15 @@ function! s:artisan_edit(command) abort
   endif
 
   let classname = remove(a:command.rest, 0)
+  let namespace = ''
 
   if a:command.name ==# 'migration'
     let classname = laravel#app().expand_migration(classname)
+  elseif a:command.name ==# 'test' && laravel#app().has('namespaced-tests')
+    let namespace = index(a:command.args, '--unit') != -1 ? 'Unit/' : 'Feature/'
   endif
 
-  return 'E' . type . a:command.bang . ' ' . classname
+  return 'E' . type . a:command.bang . ' ' . namespace . classname
 endfunction
 
 ""
@@ -276,6 +279,9 @@ let s:artisan_flags = {
       \   'make:policy': [
       \     '--model=',
       \     '-m',
+      \   ],
+      \   'make:test': [
+      \     '--unit'
       \   ],
       \   'migrate': [
       \     '--database=',
