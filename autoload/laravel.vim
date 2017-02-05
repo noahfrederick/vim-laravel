@@ -197,6 +197,7 @@ function! s:has_feature_by_path(app, feature)
         \ 'listeners': 'app/Listeners/',
         \ 'mail': 'app/Mail/',
         \ 'models': 'app/Models/',
+        \ 'namespaced-tests': 'tests/Feature/|tests/Unit/',
         \ 'policies': 'app/Policies/',
         \ 'scopes': 'app/Scopes/',
         \ 'traits': 'app/Traits/',
