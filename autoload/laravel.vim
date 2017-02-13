@@ -68,6 +68,11 @@ endfunction
 " Check whether path exists in project.
 function! s:app_has_path(path) dict abort
   let path = a:path[0] ==# '/' ? a:path : self.path(a:path)
+
+  if stridx(path, '*') != -1
+    return !empty(glob(path, 1, 1))
+  endif
+
   return getftime(path) != -1
 endfunction
 
@@ -190,6 +195,7 @@ endfunction
 function! s:has_feature_by_path(app, feature)
   let map = {
         \ 'artisan': 'artisan',
+        \ 'blade': 'resources/views/**/*.blade.php',
         \ 'commands': 'app/Commands/',
         \ 'dotenv': '.env|.env.example',
         \ 'gulp': 'gulpfile.js',

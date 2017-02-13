@@ -164,12 +164,19 @@ function! laravel#projectionist#append() abort
         \ 'resources/assets/*': {
         \   'type': 'asset',
         \ },
-        \ 'resources/views/*.blade.php': {
-        \   'type': 'view',
-        \ },
         \ 'README.md': {
         \   'type': 'doc',
         \ }}
+
+  if laravel#app().has('blade')
+    let projections['resources/views/*.blade.php'] = {
+          \   'type': 'view',
+          \ }
+  else " Assume plain PHP templates
+    let projections['resources/views/*.php'] = {
+          \   'type': 'view',
+          \ }
+  endif
 
   if laravel#app().has('dotenv')
     let projections['.env.example'] = {
