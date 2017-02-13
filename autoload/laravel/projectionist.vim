@@ -97,6 +97,18 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'app/Http/Requests/*.php': {
         \   'type': 'request',
+        \   'template': [
+        \     '<?php',
+        \     '',
+        \     'namespace {namespace};',
+        \     '',
+        \     'use Illuminate\Foundation\Http\FormRequest;',
+        \     '',
+        \     'class {basename} extends FormRequest',
+        \     '{open}',
+        \     '    //',
+        \     '{close}',
+        \   ],
         \ },
         \ 'app/Events/*.php': {
         \   'type': 'event',
@@ -228,6 +240,12 @@ function! laravel#projectionist#append() abort
           \     '    //',
           \     '{close}',
           \   ],
+          \ }
+  endif
+
+  if laravel#app().has('notifications')
+    let projections['app/Notifications/*.php'] = {
+          \   'type': 'notification',
           \ }
   endif
 

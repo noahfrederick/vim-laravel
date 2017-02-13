@@ -199,6 +199,7 @@ function! s:has_feature_by_path(app, feature)
         \ 'mail': 'app/Mail/',
         \ 'models': 'app/Models/',
         \ 'namespaced-tests': 'tests/Feature/|tests/Unit/',
+        \ 'notifications': 'app/Notifications/',
         \ 'policies': 'app/Policies/',
         \ 'scopes': 'app/Scopes/',
         \ 'traits': 'app/Traits/',
@@ -270,7 +271,35 @@ function! s:app_facades() abort dict
   return self.cache.get('facades')
 endfunction
 
-call s:add_methods('app', ['facades'])
+""
+" Get dict of app's named routes:
+"
+"   { 'route.name': 'GET|POST route/url', ... }
+function! s:app_routes() abort dict
+  if self.cache.needs('routes')
+    let routes = {}
+
+    call self.cache.set('routes', routes)
+  endif
+
+  return self.cache.get('routes')
+endfunction
+
+""
+" Get dict of app's templates:
+"
+"   { 'layouts.app': 'layouts/app.blade.php', ... }
+function! s:app_templates() abort dict
+  if self.cache.needs('templates')
+    let templates = {}
+
+    call self.cache.set('templates', templates)
+  endif
+
+  return self.cache.get('templates')
+endfunction
+
+call s:add_methods('app', ['facades', 'routes', 'templates'])
 
 function! s:app_makeprg() abort dict
   return 'php artisan'

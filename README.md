@@ -31,6 +31,7 @@ Vim support for [Laravel/Lumen 5+][laravel] projects. [![Release][release]](http
 | `:Elistener`          | Event listeners                |
 | `:Emiddleware`        | HTTP middleware                |
 | `:Emigration`         | Database migrations            |
+| `:Enotification`      | Notifications                  |
 | `:Epolicy`            | Auth policies                  |
 | `:Eprovider`          | Service providers              |
 | `:Erequest`           | HTTP form requests             |
