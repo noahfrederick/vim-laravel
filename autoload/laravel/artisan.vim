@@ -153,9 +153,8 @@ endfunction
 function! laravel#artisan#complete(A, L, P) abort
   let commands = copy(s:artisan_commands())
 
-  call remove(commands, index(commands, 'help'))
+  silent! call remove(commands, index(commands, 'help'))
   let subcommand = matchstr(a:L, '\<\(' . join(commands, '\|') . '\)\>')
-  let help = matchstr(a:L, '\<help\>')
 
   let candidates = s:artisan_flags['_global']
 
