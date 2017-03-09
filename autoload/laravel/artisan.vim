@@ -40,7 +40,7 @@ endfunction
 function! s:artisan_exec(args) abort
   try
     let cwd = s:cd(laravel#app().path())
-    let result = systemlist(join([laravel#app().makeprg()] + a:args))
+    let result = systemlist(laravel#app().makeprg(a:args))
   finally
     call s:cd(cwd)
   endtry
@@ -76,10 +76,10 @@ function! laravel#artisan#exec(...) abort
   " if exists(':terminal')
   "   tabedit %
   "   execute 'lcd' fnameescape(laravel#app().path())
-  "   execute 'terminal' laravel#app().makeprg() join(args)
+  "   execute 'terminal' laravel#app().makeprg(args)
   " else
   let cwd = s:cd(laravel#app().path())
-  execute '!' . laravel#app().makeprg() join(args)
+  execute '!' . laravel#app().makeprg(args)
   call s:cd(cwd)
   " endif
 

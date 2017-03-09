@@ -307,8 +307,30 @@ endfunction
 
 call s:add_methods('app', ['facades', 'routes', 'templates'])
 
-function! s:app_makeprg() abort dict
-  return 'php artisan'
+""
+" Get artisan command line, optionally including [args].
+"
+"   echo laravel#app().makeprg()
+"     => 'php artisan'
+"
+"   echo laravel#app().makeprg('route:list')
+"     => 'php artisan route:list'
+"
+" Arguments may be passed as individual function parameters or as a list.
+"
+"   echo laravel#app().makeprg(['route:list', '-vvv'])
+"   echo laravel#app().makeprg('route:list', '-vvv')
+"     => 'php artisan route:list -vvv'
+function! s:app_makeprg(...) abort dict
+  if a:0 == 1 && type(a:1) == type([])
+    let args = a:1
+  elseif a:0 > 1
+    let args = copy(a:000)
+  else
+    let args = []
+  endif
+
+  return join(['php', 'artisan'] + args)
 endfunction
 
 call s:add_methods('app', ['makeprg'])
