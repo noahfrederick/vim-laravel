@@ -65,6 +65,12 @@ function! s:app_path(...) dict abort
 endfunction
 
 ""
+" glob() in context of app root.
+function! s:app_glob(pat) dict abort
+  return glob(self.path(a:pat), 1, 1)
+endfunction
+
+""
 " Check whether path exists in project.
 function! s:app_has_path(path) dict abort
   let path = a:path[0] ==# '/' ? a:path : self.path(a:path)
@@ -122,8 +128,14 @@ function! s:app_expand_migration(slug) dict abort
   return fnamemodify(self.find_migration(a:slug), ':t:r')
 endfunction
 
-call s:add_methods('app', ['has_dir', 'has_file', 'has_path'])
-call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path', 'find_migration', 'expand_migration'])
+""
+" Get absolute path to views directory, optionally with [path] appended.
+function! s:app_views_path(...) dict abort
+  return join([self._root, 'resources/views'] + a:000, '/')
+endfunction
+
+call s:add_methods('app', ['glob', 'has_dir', 'has_file', 'has_path'])
+call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path', 'find_migration', 'expand_migration', 'views_path'])
 
 ""
 " Detect app's namespace
@@ -297,7 +309,19 @@ endfunction
 "   { 'layouts.app': 'layouts/app.blade.php', ... }
 function! s:app_templates() abort dict
   if self.cache.needs('templates')
+    let files = self.glob('resources/views/**/*.php')
+    call map(files, 'substitute(v:val, ''' . self.views_path() . '/'', "", "")')
+
+    let slugs = map(copy(files), 'fnamemodify(v:val, ":r:r")')
+    call map(slugs, 'substitute(v:val, "/", ".", "g")')
+
     let templates = {}
+    let index = 0
+
+    while index < len(files)
+      let templates[slugs[index]] = files[index]
+      let index = index + 1
+    endwhile
 
     call self.cache.set('templates', templates)
   endif
