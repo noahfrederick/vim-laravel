@@ -295,7 +295,23 @@ endfunction
 "   { 'route.name': 'GET|POST route/url', ... }
 function! s:app_routes() abort dict
   if self.cache.needs('routes')
+    let lines = laravel#artisan#capture('route:list')
+    call filter(lines, 'v:val =~# ''^| ''')
+    " Remove header line
+    call remove(lines, 0)
+    call map(lines, 'substitute(v:val, ''^|\(.*\)|$'', ''\1'', '''')')
+    call map(lines, 'split(v:val, '' | '', 1)')
+    " Remove unnamed routes
+    call filter(lines, 'v:val[3] !~# ''^\s*$''')
+
     let routes = {}
+
+    for line in lines
+      let name = substitute(line[3], '\s\+$', '', '')
+      let method = substitute(line[1], '\s\+$', '', '')
+      let uri = substitute(line[2], '\s\+$', '', '')
+      let routes[name] = method . ' ' . uri
+    endfor
 
     call self.cache.set('routes', routes)
   endif
@@ -348,7 +364,7 @@ call s:add_methods('app', ['facades', 'routes', 'templates'])
 function! s:app_makeprg(...) abort dict
   if a:0 == 1 && type(a:1) == type([])
     let args = a:1
-  elseif a:0 > 1
+  elseif a:0 > 0
     let args = copy(a:000)
   else
     let args = []

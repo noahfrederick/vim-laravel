@@ -37,7 +37,7 @@ endfunction
 
 ""
 " Get output from Artisan with {args} in project's root directory.
-function! s:artisan_exec(args) abort
+function! laravel#artisan#capture(args) abort
   try
     let cwd = s:cd(laravel#app().path())
     let result = systemlist(laravel#app().makeprg(a:args))
@@ -52,7 +52,7 @@ endfunction
 " Get Dict of artisan subcommands.
 function! s:artisan_commands() abort
   if laravel#app().cache.needs('artisan_commands')
-    let lines = s:artisan_exec(['list', '--raw'])
+    let lines = laravel#artisan#capture(['list', '--raw'])
 
     if v:shell_error != 0
       return []
