@@ -149,7 +149,7 @@ function! laravel#projectionist#append() abort
         \   'alternate': 'phpunit.xml',
         \ },
         \ 'phpunit.xml': {
-        \   'alternate': 'test/TestCase.php',
+        \   'alternate': 'tests/TestCase.php',
         \ },
         \ 'resources/lang/*.php': {
         \   'type': 'language',
