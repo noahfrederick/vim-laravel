@@ -44,17 +44,20 @@ Vim support for [Laravel/Lumen 5+][laravel] projects. [![Release][release]](http
 | `:Eview`              | Blade templates                |
 
 * Enhanced `gf` command works on class names, template names, config and translation keys.
+* Complete view/route names in insert mode.
 * Use `:Console` to fire up a REPL (`artisan tinker`).
 
 ## Installation
 
 Laravel.vim has optional dependencies on [composer.vim][vim-composer],
-[dispatch.vim][dispatch] (the `:Console` command), and
-[projectionist.vim][projectionist] (navigation commands):
+[dispatch.vim][dispatch] (the `:Console` command),
+[projectionist.vim][projectionist] (navigation commands), and
+[nvim-completion-manager][ncm] (insert-mode completion):
 
-	Plug 'tpope/vim-dispatch'
-	Plug 'tpope/vim-projectionist'
-	Plug 'noahfrederick/vim-composer'
+	Plug 'tpope/vim-dispatch'             "| Optional
+	Plug 'tpope/vim-projectionist'        "|
+	Plug 'roxma/nvim-completion-manager'  "|
+	Plug 'noahfrederick/vim-composer'     "|
 	Plug 'noahfrederick/vim-laravel'
 
 ## Credits and License
@@ -67,4 +70,5 @@ See `:help license`.
 [vim-composer]: https://github.com/noahfrederick/vim-composer
 [projectionist]: https://github.com/tpope/vim-projectionist
 [dispatch]: https://github.com/tpope/vim-dispatch
+[ncm]: https://github.com/roxma/nvim-completion-manager
 [rails]: https://github.com/tpope/vim-rails

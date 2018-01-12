@@ -94,4 +94,31 @@ augroup laravel_projections
 augroup END
 
 " }}}
+" Completion {{{
+
+augroup laravel_completion
+  autocmd!
+  " Set up nvim-completion-manager sources
+  " :help NCM-source-examples
+  autocmd User CmSetup call cm#register_source({'name' : 'Laravel Route',
+        \ 'abbreviation': 'Route',
+        \ 'priority': 9,
+        \ 'scoping': 1,
+        \ 'scopes': ['php', 'blade'],
+        \ 'word_pattern': '[A-Za-z0-9_.:-]+',
+        \ 'cm_refresh_patterns': ['\broute\([''"]'],
+        \ 'cm_refresh': 'laravel#completion#cm_routes',
+        \ })
+  autocmd User CmSetup call cm#register_source({'name' : 'Laravel View',
+        \ 'abbreviation': 'View',
+        \ 'priority': 9,
+        \ 'scoping': 1,
+        \ 'scopes': ['php', 'blade'],
+        \ 'word_pattern': '[A-Za-z0-9_.:-]+',
+        \ 'cm_refresh_patterns': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
+        \ 'cm_refresh': 'laravel#completion#cm_views',
+        \ })
+augroup END
+
+" }}}
 " vim: fdm=marker:sw=2:sts=2:et
