@@ -415,6 +415,11 @@ call s:add_methods('cache', ['clear', 'get', 'set', 'has', 'needs'])
 
 let s:app_prototype.cache = s:cache_prototype
 
+augroup laravel_cache
+  autocmd!
+  autocmd BufWritePost routes.php,routes/*.php call laravel#cache_clear('routes')
+augroup END
+
 ""
 " Get namespace of buffer's file
 function! s:buffer_namespace() abort dict
