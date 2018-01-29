@@ -110,6 +110,24 @@ function! laravel#projectionist#append() abort
         \     '{close}',
         \   ],
         \ },
+        \ 'app/Http/Resources/*.php': {
+        \   'type': 'resource',
+        \ },
+        \ 'app/Rules/*.php': {
+        \   'type': 'rule',
+        \   'template': [
+        \     '<?php',
+        \     '',
+        \     'namespace {namespace};',
+        \     '',
+        \     'use Illuminate\Contracts\Validation\Rule;',
+        \     '',
+        \     'class {basename} implements Rule',
+        \     '{open}',
+        \     '    //',
+        \     '{close}',
+        \   ],
+        \ },
         \ 'app/Events/*.php': {
         \   'type': 'event',
         \   'alternate': 'app/Listeners/{}.php',

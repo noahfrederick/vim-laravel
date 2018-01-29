@@ -29,13 +29,16 @@ Vim support for [Laravel/Lumen 5+][laravel] projects. [![Release][release]](http
 | `:Elanguage`          | Messages/translations          |
 | `:Elib`               | All class files under `app/`   |
 | `:Elistener`          | Event listeners                |
+| `:Email`              | Mailables                      |
 | `:Emiddleware`        | HTTP middleware                |
 | `:Emigration`         | Database migrations            |
 | `:Enotification`      | Notifications                  |
 | `:Epolicy`            | Auth policies                  |
 | `:Eprovider`          | Service providers              |
 | `:Erequest`           | HTTP form requests             |
+| `:Eresource`          | HTTP resources                 |
 | `:Eroutes`            | HTTP routes files              |
+| `:Erule`              | Validation rules               |
 | `:Eseeder`            | Database seeders               |
 | `:Etest`              | All class files under `tests/` |
 | `:Eview`              | Blade templates                |
