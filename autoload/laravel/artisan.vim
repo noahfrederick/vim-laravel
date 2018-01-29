@@ -249,6 +249,16 @@ let s:artisan_flags = {
       \     '-m',
       \     '--resource',
       \     '-r',
+      \     '--parent=',
+      \     '-p',
+      \   ],
+      \   'make:exception': [
+      \     '--render',
+      \     '--report',
+      \   ],
+      \   'make:factory': [
+      \     '--model=',
+      \     '-m',
       \   ],
       \   'make:job': [
       \     '--sync',
@@ -259,6 +269,7 @@ let s:artisan_flags = {
       \     '--queued',
       \   ],
       \   'make:mail': [
+      \     '--force',
       \     '--markdown=',
       \     '-m',
       \   ],
@@ -268,16 +279,33 @@ let s:artisan_flags = {
       \     '--path=',
       \   ],
       \   'make:model': [
-      \     '--migration',
-      \     '-m',
+      \     '--all',
+      \     '-a',
       \     '--controller',
       \     '-c',
+      \     '--factory',
+      \     '-f',
+      \     '--force',
+      \     '--migration',
+      \     '-m',
+      \     '--pivot',
+      \     '-p',
       \     '--resource',
       \     '-r',
+      \   ],
+      \   'make:notification': [
+      \     '--force',
+      \     '-f',
+      \     '--markdown=',
+      \     '-m',
       \   ],
       \   'make:policy': [
       \     '--model=',
       \     '-m',
+      \   ],
+      \   'make:resource': [
+      \     '--collection',
+      \     '-c',
       \   ],
       \   'make:test': [
       \     '--unit'
