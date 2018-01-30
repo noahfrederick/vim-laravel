@@ -45,6 +45,9 @@ function! laravel#projectionist#append() abort
         \     '{close}',
         \   ],
         \ },
+        \ 'app/Broadcasting/*.php': {
+        \   'type': 'channel',
+        \ },
         \ 'app/Http/Controllers/*.php': {
         \   'type': 'controller',
         \   'template': [

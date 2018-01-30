@@ -19,6 +19,7 @@ Vim support for [Laravel/Lumen 5+][laravel] projects.
 |-----------------------|--------------------------------|
 | `:{E,S,V,T}asset`     | Anything under `assets/`       |
 | `:Ebootstrap`         | Bootstrap files in `boostrap/` |
+| `:Echannel`           | Broadcast channels             |
 | `:Ecommand`           | Console commands               |
 | `:Econfig`            | Configuration files            |
 | `:Econtroller`        | HTTP controllers               |
