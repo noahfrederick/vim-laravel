@@ -13,14 +13,14 @@ endfunction
 " @private
 " Print warning {msg}.
 function! laravel#warn(msg) abort
-  redraw | echohl WarningMsg | echomsg a:msg | echohl None
+  echohl WarningMsg | echomsg a:msg | echohl None
 endfunction
 
 ""
 " @private
 " Print error {msg}.
 function! laravel#error(msg) abort
-  redraw | echohl ErrorMsg | echomsg a:msg | echohl None
+  echohl ErrorMsg | echomsg a:msg | echohl None
 endfunction
 
 ""
