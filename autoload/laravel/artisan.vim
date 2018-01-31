@@ -36,6 +36,26 @@ function! s:uniq(list) abort
 endfunction
 
 ""
+" Get Dict from JSON {expr}.
+function! s:json_decode(expr) abort
+  try
+    if exists('*json_decode')
+      let expr = type(a:expr) == type([]) ? join(a:expr, "\n") : a:expr
+      return json_decode(expr)
+    else
+      return projectionist#json_parse(a:expr)
+    endif
+  catch /^Vim\%((\a\+)\)\=:E474/
+    call laravel#throw('JSON cannot be parsed')
+  catch /^invalid JSON/
+    call laravel#throw('JSON cannot be parsed')
+  catch /^Vim\%((\a\+)\)\=:E117/
+    call laravel#throw('projectionist is not available')
+  endtry
+  return {}
+endfunction
+
+""
 " Get output from Artisan with {args} in project's root directory.
 function! laravel#artisan#capture(args) abort
   try
@@ -49,23 +69,81 @@ function! laravel#artisan#capture(args) abort
 endfunction
 
 ""
-" Get Dict of artisan subcommands.
-function! s:artisan_commands() abort
-  if laravel#app().cache.needs('artisan_commands')
-    let lines = laravel#artisan#capture(['list', '--raw'])
+" Get Dict from artisan list --format=json.
+function! s:artisan_json() abort
+  if laravel#app().cache.needs('artisan_json')
+    let lines = laravel#artisan#capture(['list', '--format=json'])
 
-    if v:shell_error != 0
-      return []
+    let json = {}
+
+    if v:shell_error == 0
+      try
+        let json = s:json_decode(lines)
+      endtry
     endif
 
-    call map(lines, "matchstr(v:val, '^.\\{-}\\ze\\s')")
-    call filter(lines, 'v:val != ""')
-
-    call laravel#app().cache.set('artisan_commands', lines)
+    call laravel#app().cache.set('artisan_json', json)
   endif
 
-  return laravel#app().cache.get('artisan_commands')
+  return laravel#app().cache.get('artisan_json')
 endfunction
+
+""
+" Get Dict of artisan subcommands and their options.
+function! s:artisan_commands() abort
+  if laravel#app().cache.needs('artisan_commands')
+    let definitions = get(s:artisan_json(), 'commands', [])
+    let commands = {}
+
+    if !empty(definitions)
+      for command in definitions
+        let options = []
+
+        for [name, option] in items(get(command.definition, 'options', {}))
+          if option.accept_value
+            call add(options, option.name . '=')
+          else
+            call add(options, option.name)
+          endif
+
+          if !empty(option.shortcut)
+            call add(options, option.shortcut)
+          endif
+        endfor
+
+        let commands[command.name] = options
+      endfor
+    endif
+
+    call laravel#app().cache.set('artisan_commands', commands)
+  endif
+
+  return deepcopy(laravel#app().cache.get('artisan_commands'))
+endfunction
+
+""
+" Get list of artisan subcommand flags.
+function! s:artisan_flags(subcommand) abort
+  return get(s:artisan_commands(), a:subcommand, s:artisan_global_flags)
+endfunction
+
+let s:artisan_global_flags = [
+      \   '--help',
+      \   '-h',
+      \   '--quiet',
+      \   '-q',
+      \   '--verbose',
+      \   '-v',
+      \   '-vv',
+      \   '-vvv',
+      \   '--version',
+      \   '-V',
+      \   '--ansi',
+      \   '--no-ansi',
+      \   '--no-interaction',
+      \   '-n',
+      \   '--env=',
+      \ ]
 
 ""
 " The :Artisan command.
@@ -73,15 +151,9 @@ function! laravel#artisan#exec(...) abort
   let args = copy(a:000)
   let bang = remove(args, 0)
 
-  " if exists(':terminal')
-  "   tabedit %
-  "   execute 'lcd' fnameescape(laravel#app().path())
-  "   execute 'terminal' laravel#app().makeprg(args)
-  " else
   let cwd = s:cd(laravel#app().path())
   execute '!' . laravel#app().makeprg(args)
   call s:cd(cwd)
-  " endif
 
   call s:artisan_doautocmd(args, bang, v:shell_error)
   return ''
@@ -151,17 +223,15 @@ endfunction
 " @private
 " Completion for the :Artisan command.
 function! laravel#artisan#complete(A, L, P) abort
-  let commands = copy(s:artisan_commands())
+  let commands = keys(s:artisan_commands())
 
   silent! call remove(commands, index(commands, 'help'))
   let subcommand = matchstr(a:L, '\<\(' . join(commands, '\|') . '\)\>')
 
-  let candidates = s:artisan_flags['_global']
-
   if empty(subcommand)
-    let candidates = candidates + commands + ['help']
-  elseif has_key(s:artisan_flags, subcommand)
-    let candidates = candidates + s:artisan_flags[subcommand]
+    let candidates = commands + ['help'] + s:artisan_flags('_')
+  else
+    let candidates = s:artisan_flags(subcommand)
   endif
 
   return s:filter_completions(candidates, a:A)
@@ -197,193 +267,6 @@ function! s:filter_completions(candidates, A) abort
   let filtered = filter(copy(candidates),'"/".v:val =~# regex')
   return filtered
 endfunction
-
-" Unlike subcommands, artisan does not list switches/flags in a friendly
-" format, so we hard-code them.
-let s:artisan_flags = {
-      \   '_global': [
-      \     '--help',
-      \     '-h',
-      \     '--quiet',
-      \     '-q',
-      \     '--verbose',
-      \     '-v',
-      \     '-vv',
-      \     '-vvv',
-      \     '--version',
-      \     '-V',
-      \     '--ansi',
-      \     '--no-ansi',
-      \     '--no-interaction',
-      \     '-n',
-      \     '--env=',
-      \   ],
-      \   'db:seed': [
-      \     '--class=',
-      \     '--database=',
-      \     '--force',
-      \   ],
-      \   'down': [
-      \     '--message=',
-      \     '--retry=',
-      \   ],
-      \   'help': [
-      \     '--format=',
-      \     '--raw',
-      \   ],
-      \   'key:generate': [
-      \     '--show',
-      \   ],
-      \   'list': [
-      \     '--format=',
-      \     '--raw',
-      \   ],
-      \   'make:auth': [
-      \     '--views',
-      \   ],
-      \   'make:console': [
-      \     '--command=',
-      \   ],
-      \   'make:controller': [
-      \     '--model=',
-      \     '-m',
-      \     '--resource',
-      \     '-r',
-      \     '--parent=',
-      \     '-p',
-      \   ],
-      \   'make:exception': [
-      \     '--render',
-      \     '--report',
-      \   ],
-      \   'make:factory': [
-      \     '--model=',
-      \     '-m',
-      \   ],
-      \   'make:job': [
-      \     '--sync',
-      \   ],
-      \   'make:listener': [
-      \     '--event=',
-      \     '-e',
-      \     '--queued',
-      \   ],
-      \   'make:mail': [
-      \     '--force',
-      \     '--markdown=',
-      \     '-m',
-      \   ],
-      \   'make:migration': [
-      \     '--create=',
-      \     '--table=',
-      \     '--path=',
-      \   ],
-      \   'make:model': [
-      \     '--all',
-      \     '-a',
-      \     '--controller',
-      \     '-c',
-      \     '--factory',
-      \     '-f',
-      \     '--force',
-      \     '--migration',
-      \     '-m',
-      \     '--pivot',
-      \     '-p',
-      \     '--resource',
-      \     '-r',
-      \   ],
-      \   'make:notification': [
-      \     '--force',
-      \     '-f',
-      \     '--markdown=',
-      \     '-m',
-      \   ],
-      \   'make:policy': [
-      \     '--model=',
-      \     '-m',
-      \   ],
-      \   'make:resource': [
-      \     '--collection',
-      \     '-c',
-      \   ],
-      \   'make:test': [
-      \     '--unit'
-      \   ],
-      \   'migrate': [
-      \     '--database=',
-      \     '--force',
-      \     '--path=',
-      \     '--pretend',
-      \     '--seed',
-      \     '--step',
-      \   ],
-      \   'migrate:install': [
-      \     '--database=',
-      \   ],
-      \   'migrate:refresh': [
-      \     '--database=',
-      \     '--force',
-      \     '--path=',
-      \     '--seed',
-      \     '--seeder=',
-      \   ],
-      \   'migrate:reset': [
-      \     '--database=',
-      \     '--force',
-      \     '--pretend',
-      \   ],
-      \   'migrate:rollback': [
-      \     '--database=',
-      \     '--force',
-      \     '--pretend',
-      \   ],
-      \   'migrate:status': [
-      \     '--database=',
-      \     '--path=',
-      \   ],
-      \   'optimize': [
-      \     '--force',
-      \     '--psr',
-      \   ],
-      \   'queue:listen': [
-      \     '--queue=',
-      \     '--delay=',
-      \     '--memory=',
-      \     '--timeout=',
-      \     '--sleep=',
-      \     '--tries=',
-      \   ],
-      \   'queue:work': [
-      \     '--queue=',
-      \     '--daemon',
-      \     '--delay=',
-      \     '--force',
-      \     '--memory=',
-      \     '--sleep=',
-      \     '--tries=',
-      \   ],
-      \   'route:list': [
-      \     '--method=',
-      \     '--name=',
-      \     '--path=',
-      \     '--reverse',
-      \     '-r',
-      \     '--sort=',
-      \   ],
-      \   'serve': [
-      \     '--host=',
-      \     '--port=',
-      \   ],
-      \   'tinker': [
-      \     '--include=',
-      \   ],
-      \   'vendor:publish': [
-      \     '--force',
-      \     '--provider=',
-      \     '--tag=',
-      \   ],
-      \ }
 
 ""
 " @private

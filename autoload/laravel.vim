@@ -2,10 +2,25 @@
 " Maintainer: Noah Frederick
 
 ""
+" @private
 " Throw error with {msg}.
-function! s:throw(msg) abort
+function! laravel#throw(msg) abort
   let v:errmsg = 'laravel: ' . a:msg
   throw v:errmsg
+endfunction
+
+""
+" @private
+" Print warning {msg}.
+function! laravel#warn(msg) abort
+  redraw | echohl WarningMsg | echomsg a:msg | echohl None
+endfunction
+
+""
+" @private
+" Print error {msg}.
+function! laravel#error(msg) abort
+  redraw | echohl ErrorMsg | echomsg a:msg | echohl None
 endfunction
 
 ""
@@ -55,7 +70,7 @@ function! s:app(...) abort
     return app
   endif
 
-  call s:throw('not a Laravel app: ' . expand('%:p'))
+  call laravel#throw('not a Laravel app: ' . expand('%:p'))
 endfunction
 
 ""
