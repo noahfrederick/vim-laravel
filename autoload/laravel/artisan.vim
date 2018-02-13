@@ -57,10 +57,10 @@ endfunction
 
 ""
 " Get output from Artisan with {args} in project's root directory.
-function! laravel#artisan#capture(args) abort
+function! s:artisan_capture(app, args) abort
   try
-    let cwd = s:cd(laravel#app().path())
-    let result = systemlist(laravel#app().makeprg(a:args))
+    let cwd = s:cd(a:app.path())
+    let result = systemlist(a:app.makeprg(a:args))
   finally
     call s:cd(cwd)
   endtry
@@ -70,9 +70,9 @@ endfunction
 
 ""
 " Get Dict from artisan list --format=json.
-function! s:artisan_json() abort
-  if laravel#app().cache.needs('artisan_json')
-    let lines = laravel#artisan#capture(['list', '--format=json'])
+function! s:artisan_json(app) abort
+  if a:app.cache.needs('artisan_json')
+    let lines = s:artisan_capture(a:app, ['list', '--format=json'])
 
     let json = {}
 
@@ -82,17 +82,36 @@ function! s:artisan_json() abort
       endtry
     endif
 
-    call laravel#app().cache.set('artisan_json', json)
+    call a:app.cache.set('artisan_json', json)
   endif
 
-  return laravel#app().cache.get('artisan_json')
+  return a:app.cache.get('artisan_json')
+endfunction
+
+""
+" Get Dict of artisan subcommands and their descriptions.
+function! laravel#artisan#commands(app) abort
+  if a:app.cache.needs('artisan_commands')
+    let definitions = get(s:artisan_json(a:app), 'commands', [])
+    let commands = {}
+
+    if !empty(definitions)
+      for command in definitions
+        let commands[command.name] = command.description
+      endfor
+    endif
+
+    call a:app.cache.set('artisan_commands', commands)
+  endif
+
+  return deepcopy(a:app.cache.get('artisan_commands'))
 endfunction
 
 ""
 " Get Dict of artisan subcommands and their options.
-function! s:artisan_commands() abort
-  if laravel#app().cache.needs('artisan_commands')
-    let definitions = get(s:artisan_json(), 'commands', [])
+function! laravel#artisan#command_options(app) abort
+  if a:app.cache.needs('artisan_command_options')
+    let definitions = get(s:artisan_json(a:app), 'commands', [])
     let commands = {}
 
     if !empty(definitions)
@@ -115,10 +134,14 @@ function! s:artisan_commands() abort
       endfor
     endif
 
-    call laravel#app().cache.set('artisan_commands', commands)
+    call a:app.cache.set('artisan_command_options', commands)
   endif
 
-  return deepcopy(laravel#app().cache.get('artisan_commands'))
+  return deepcopy(a:app.cache.get('artisan_command_options'))
+endfunction
+
+function! s:artisan_commands() abort
+  return laravel#artisan#command_options(laravel#app())
 endfunction
 
 ""

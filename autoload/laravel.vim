@@ -388,7 +388,13 @@ function! s:app_makeprg(...) abort dict
   return join(['php', 'artisan'] + args)
 endfunction
 
-call s:add_methods('app', ['makeprg'])
+""
+" Get list of available artisan commands.
+function! s:app_artisan_commands() abort dict
+  return laravel#artisan#commands(self)
+endfunction
+
+call s:add_methods('app', ['makeprg', 'artisan_commands'])
 
 let s:cache_prototype = {'_dict': {}}
 
