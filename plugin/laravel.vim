@@ -68,6 +68,7 @@ augroup laravel_detect
         \   call laravel#buffer_setup() |
         \ endif
   autocmd FileType * if s:laravel_detect() | call laravel#buffer_setup() | endif
+  autocmd BufNewFile,BufReadPost */storage/logs/*.log if s:laravel_detect() | call laravel#log_buffer_setup() | endif
 
   " File-type-specific setup
   autocmd Syntax php

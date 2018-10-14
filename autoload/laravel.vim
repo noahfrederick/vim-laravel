@@ -482,6 +482,32 @@ endfunction
 
 ""
 " @private
+" Set up log buffers
+function! laravel#log_buffer_setup() abort
+  setlocal readonly
+  setlocal foldexpr=laravel#log_foldexpr(v:lnum)
+  setlocal foldmethod=expr
+endfunction
+
+""
+" @private
+" Fold log files
+function! laravel#log_foldexpr(lnum) abort
+  let line = getline(a:lnum)
+
+  if line =~# '^\[stacktrace\]$'
+    return 'a1'
+  elseif line =~# ' {main}$' && getline(a:lnum + 1) !~# '^"}\s*$'
+    return 's1'
+  elseif line =~# '^"}\s*$' && getline(a:lnum - 1) =~# ' {main}$'
+    return 's1'
+  endif
+
+  return '='
+endfunction
+
+""
+" @private
 " Set up commands for Laravel buffers
 function! laravel#buffer_commands() abort
   ""
