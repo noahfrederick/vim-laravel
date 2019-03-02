@@ -477,7 +477,7 @@ function! laravel#buffer_setup() abort
   call laravel#buffer_commands()
   call laravel#buffer_mappings()
 
-  silent doautocmd User Laravel
+  doautocmd User Laravel
 endfunction
 
 ""
