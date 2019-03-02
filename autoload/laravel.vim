@@ -360,7 +360,32 @@ function! s:app_templates() abort dict
   return self.cache.get('templates')
 endfunction
 
-call s:add_methods('app', ['facades', 'routes', 'templates'])
+""
+" Get app's configured locale.
+"
+"   'en'
+function! s:app_locale() abort dict
+  if self.cache.needs('locale')
+    let locale = 'en'
+
+    if ! self.has_file(self.config_path('app.php'))
+      return locale
+    endif
+
+    let lines = s:readfile(self.config_path('app.php'))
+    let match = matchstr(join(lines, "\n"), "'locale'\\s*=>\\s*'\\zs\\w\\+\\ze'")
+
+    if ! empty(match)
+      let locale = match
+    endif
+
+    call self.cache.set('locale', locale)
+  endif
+
+  return self.cache.get('locale')
+endfunction
+
+call s:add_methods('app', ['facades', 'routes', 'templates', 'locale'])
 
 ""
 " Get artisan command line, optionally including [args].

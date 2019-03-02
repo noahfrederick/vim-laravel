@@ -12,7 +12,7 @@ function! laravel#goto#filetype_php() abort
   if !empty(path) | return 'Econfig '.path | endif
 
   let path = laravel#goto#language()
-  if !empty(path) | return 'Elanguage '.path | endif
+  if !empty(path) | return 'Elanguage '.laravel#app().locale().'/'.path | endif
 
   try
     let cmd = composer#autoload#find()
@@ -34,7 +34,7 @@ function! laravel#goto#filetype_blade() abort
   if !empty(path) | return 'Econfig '.path | endif
 
   let path = laravel#goto#language()
-  if !empty(path) | return 'Elanguage '.path | endif
+  if !empty(path) | return 'Elanguage '.laravel#app().locale().'/'.path | endif
 
   try
     let cmd = composer#autoload#find()
@@ -72,7 +72,7 @@ endfunction
 " @private
 " Capture config name at cursor
 function! laravel#goto#config() abort
-  return s:find_name('\<config([''"]\([^''"]\+\)[''"][,)].*$')
+  return s:find_name('\<config([''"]\([^''".]\+\)[^''"]*[''"][,)].*$')
 endfunction
 
 ""
@@ -93,7 +93,7 @@ endfunction
 " @private
 " Capture language name at cursor
 function! laravel#goto#language() abort
-  return s:find_name('\<trans\%(_choice\)\?([''"]\([^''"]\+\)[''"][,)].*$')
+  return s:find_name('\<trans\%(_choice\)\?([''"]\([^''".]\+\)[^''"]*[''"][,)].*$')
 endfunction
 
 ""
