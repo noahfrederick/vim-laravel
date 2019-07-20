@@ -57,7 +57,7 @@ endfunction
 
 ""
 " Get output from Artisan with {args} in project's root directory.
-function! s:artisan_capture(app, args) abort
+function! laravel#artisan#capture(app, args) abort
   try
     let cwd = s:cd(a:app.path())
     let result = systemlist(a:app.makeprg(a:args))
@@ -72,7 +72,7 @@ endfunction
 " Get Dict from artisan list --format=json.
 function! s:artisan_json(app) abort
   if a:app.cache.needs('artisan_json')
-    let lines = s:artisan_capture(a:app, ['list', '--format=json'])
+    let lines = laravel#artisan#capture(a:app, ['list', '--format=json'])
 
     let json = {}
 

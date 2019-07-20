@@ -101,23 +101,25 @@ augroup laravel_completion
   autocmd!
   " Set up nvim-completion-manager sources
   " :help NCM-source-examples
-  autocmd User CmSetup call cm#register_source({'name' : 'Laravel Route',
-        \ 'abbreviation': 'Route',
+  au User Ncm2Plugin call ncm2#register_source({
+        \ 'name' : 'Laravel Route',
         \ 'priority': 9,
-        \ 'scoping': 1,
-        \ 'scopes': ['php', 'blade'],
+        \ 'subscope_enable': 1,
+        \ 'scope': ['php','blade'],
+        \ 'mark': 'Route',
         \ 'word_pattern': '[A-Za-z0-9_.:-]+',
-        \ 'cm_refresh_patterns': ['\broute\([''"]'],
-        \ 'cm_refresh': 'laravel#completion#cm_routes',
+        \ 'complete_pattern': ['\broute\([''"]'],
+        \ 'on_complete': 'laravel#completion#cm_routes',
         \ })
-  autocmd User CmSetup call cm#register_source({'name' : 'Laravel View',
-        \ 'abbreviation': 'View',
+  au User Ncm2Plugin call ncm2#register_source({
+        \ 'name' : 'Laravel View',
         \ 'priority': 9,
-        \ 'scoping': 1,
-        \ 'scopes': ['php', 'blade'],
+        \ 'subscope_enable': 1,
+        \ 'scope': ['php','blade'],
+        \ 'mark': 'View',
         \ 'word_pattern': '[A-Za-z0-9_.:-]+',
-        \ 'cm_refresh_patterns': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
-        \ 'cm_refresh': 'laravel#completion#cm_views',
+        \ 'complete_pattern': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
+        \ 'on_complete': 'laravel#completion#cm_views',
         \ })
 augroup END
 
