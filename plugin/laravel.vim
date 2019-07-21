@@ -123,20 +123,20 @@ augroup laravel_completion
   " Set up ncm2 sources
   " :help ncm2#register_source-example
   autocmd User Ncm2Plugin call ncm2#register_source({
-        \ 'name' : 'Laravel Route',
+        \ 'name': 'Laravel Route',
         \ 'priority': 9,
         \ 'subscope_enable': 1,
-        \ 'scope': ['php','blade'],
+        \ 'scope': ['php', 'blade'],
         \ 'mark': 'Route',
         \ 'word_pattern': '[A-Za-z0-9_.:-]+',
         \ 'complete_pattern': ['\broute\([''"]'],
         \ 'on_complete': 'laravel#completion#ncm2_routes',
         \ })
   autocmd User Ncm2Plugin call ncm2#register_source({
-        \ 'name' : 'Laravel View',
+        \ 'name': 'Laravel View',
         \ 'priority': 9,
         \ 'subscope_enable': 1,
-        \ 'scope': ['php','blade'],
+        \ 'scope': ['php', 'blade'],
         \ 'mark': 'View',
         \ 'word_pattern': '[A-Za-z0-9_.:-]+',
         \ 'complete_pattern': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
