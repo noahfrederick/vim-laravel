@@ -129,6 +129,7 @@ augroup laravel_completion
         \ 'scope': ['php', 'blade'],
         \ 'mark': 'Route',
         \ 'word_pattern': '[A-Za-z0-9_.:-]+',
+        \ 'complete_length': -1,
         \ 'complete_pattern': ['\broute\([''"]'],
         \ 'on_complete': 'laravel#completion#ncm2_routes',
         \ })
@@ -139,6 +140,7 @@ augroup laravel_completion
         \ 'scope': ['php', 'blade'],
         \ 'mark': 'View',
         \ 'word_pattern': '[A-Za-z0-9_.:-]+',
+        \ 'complete_length': -1,
         \ 'complete_pattern': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
         \ 'on_complete': 'laravel#completion#ncm2_views',
         \ })
