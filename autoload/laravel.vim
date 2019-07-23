@@ -310,7 +310,7 @@ endfunction
 "   { 'route.name': 'GET|POST route/url', ... }
 function! s:app_routes() abort dict
   if self.cache.needs('routes')
-    let lines = laravel#artisan#capture('route:list')
+    let lines = laravel#artisan#capture(laravel#app(), 'route:list')
     call filter(lines, 'v:val =~# ''^| ''')
     " Remove header line
     call remove(lines, 0)

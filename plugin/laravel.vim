@@ -119,6 +119,31 @@ augroup laravel_completion
         \ 'cm_refresh_patterns': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
         \ 'cm_refresh': 'laravel#completion#cm_views',
         \ })
+
+  " Set up ncm2 sources
+  " :help ncm2#register_source-example
+  autocmd User Ncm2Plugin call ncm2#register_source({
+        \ 'name': 'Laravel Route',
+        \ 'priority': 9,
+        \ 'subscope_enable': 1,
+        \ 'scope': ['php', 'blade'],
+        \ 'mark': 'Route',
+        \ 'word_pattern': '[A-Za-z0-9_.:-]+',
+        \ 'complete_length': -1,
+        \ 'complete_pattern': ['\broute\([''"]'],
+        \ 'on_complete': 'laravel#completion#ncm2_routes',
+        \ })
+  autocmd User Ncm2Plugin call ncm2#register_source({
+        \ 'name': 'Laravel View',
+        \ 'priority': 9,
+        \ 'subscope_enable': 1,
+        \ 'scope': ['php', 'blade'],
+        \ 'mark': 'View',
+        \ 'word_pattern': '[A-Za-z0-9_.:-]+',
+        \ 'complete_length': -1,
+        \ 'complete_pattern': ['\bview\([''"]', '@(component|extends|include)\([''"]'],
+        \ 'on_complete': 'laravel#completion#ncm2_views',
+        \ })
 augroup END
 
 " }}}
