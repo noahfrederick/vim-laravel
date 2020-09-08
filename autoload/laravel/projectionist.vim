@@ -211,7 +211,19 @@ function! laravel#projectionist#append() abort
           \ }
   endif
 
-  if laravel#app().has('jobs')
+  if laravel#app().has('commands')
+    let projections['app/Commands/*.php'] = {
+          \   'type': 'command',
+          \ }
+
+    let projections['app/Console/Commands/*.php'] = {
+          \   'type': 'console',
+          \ }
+
+    let projections['app/Console/Kernel.php'] = {
+          \   'type': 'console',
+          \ }
+  else
     let projections['app/Jobs/*.php'] = {
           \   'type': 'job',
           \ }
@@ -226,18 +238,6 @@ function! laravel#projectionist#append() abort
 
     let projections['app/Console/Kernel.php'] = {
           \   'type': 'command',
-          \ }
-  elseif laravel#app().has('commands')
-    let projections['app/Commands/*.php'] = {
-          \   'type': 'command',
-          \ }
-
-    let projections['app/Console/Commands/*.php'] = {
-          \   'type': 'console',
-          \ }
-
-    let projections['app/Console/Kernel.php'] = {
-          \   'type': 'console',
           \ }
   endif
 
