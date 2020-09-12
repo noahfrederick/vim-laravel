@@ -198,25 +198,30 @@ function! s:app_has(feature) abort dict
 endfunction
 
 function! s:has_framework(feature)
-  if a:feature =~# '^laravel'
-    let package = 'laravel/framework'
-    let constraint = substitute(a:feature, '^laravel', '', '')
-  elseif a:feature =~# '^lumen'
-    let package = 'laravel/lumen-framework'
-    let constraint = substitute(a:feature, '^lumen', '', '')
+  let parts = split(a:feature, '\s\+')
+  let name = remove(parts, 0)
+
+  if len(parts) > 1
+    let comparator = get(parts, 0)
+    let ver = get(parts, 1)
   else
-    return 0
+    let comparator = '=='
+    let ver = get(parts, 0, '')
+  end
+
+  if name == 'laravel'
+    let package = 'laravel/framework'
+  elseif name == 'lumen'
+    let package = 'laravel/lumen-framework'
+  else
+    return v:false
   endif
 
   try
-    let ver = composer#query('require.' . package)
+    return composer#project().is_installed(package, comparator, ver)
   catch /^Vim\%((\a\+)\)\=:E117/
-    return 0
+    return v:false
   endtry
-
-  let constraint = '^[^0-9]*' . escape(constraint, '.')
-
-  return !empty(ver) && match(ver, constraint) >= 0
 endfunction
 
 function! s:has_feature_by_path(app, feature)
