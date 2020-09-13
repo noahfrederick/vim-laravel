@@ -1,0 +1,2 @@
+Execute (sets guard variable):
+  AssertEqual g:loaded_laravel, 1
