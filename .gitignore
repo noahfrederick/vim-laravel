@@ -1,4 +1,5 @@
-.vim-flavor
-
 # Packaged plug-in dir
 pkg/
+
+# Fixtures installed by CI
+/test/fixtures/*

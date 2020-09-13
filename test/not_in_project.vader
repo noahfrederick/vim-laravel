@@ -1,8 +1,5 @@
 Before (in a non-laravel buffer):
-  edit README.md
-
-After (clean up):
-  bdelete!
+  edit test/fixtures/.gitkeep
 
 Execute (projection commands are not defined):
   AssertThrows Econtroller
