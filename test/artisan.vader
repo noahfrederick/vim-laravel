@@ -2,7 +2,7 @@ Before (in a laravel buffer):
   edit test/fixtures/laravel-8/.env
 
 Execute (generate model file):
-  Artisan make:model Example
+  silent Artisan make:model Example
 
 Then (editing model file):
   AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Models/Example.php'
