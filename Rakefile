@@ -5,17 +5,9 @@ require 'json'
 
 plugin = JSON.load(File.new('addon-info.json'))
 
-desc 'Target for CI server'
-task ci: [:dump, :test]
-
-desc 'Dump Vim\'s version info'
-task :dump do
-  sh 'vim --version'
-end
-
-desc 'Run tests with vspec'
+desc 'Run tests with vader'
 task :test do
-  sh 'bundle exec vim-flavor test'
+  sh 'vim -c "Vader! test/*"'
 end
 
 desc 'Rebuild the documentation with vimdoc'

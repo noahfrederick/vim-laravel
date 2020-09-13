@@ -1,0 +1,13 @@
+Before (in a non-laravel buffer):
+  edit README.md
+
+After (clean up):
+  bdelete!
+
+Execute (projection commands are not defined):
+  AssertThrows Econtroller
+  AssertEqual g:vader_exception, 'Vim:E492: Not an editor command: Econtroller'
+
+Execute (the :Artisan command is not defined):
+  AssertThrows Artisan
+  AssertEqual g:vader_exception, 'Vim:E492: Not an editor command: Artisan'
