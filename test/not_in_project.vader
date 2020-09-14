@@ -1,10 +1,11 @@
 Before (in a non-laravel buffer):
   edit test/fixtures/.gitkeep
 
+Execute (Laravel root is not set):
+  AssertEqual exists('b:laravel_root'), 0
+
 Execute (projection commands are not defined):
-  AssertThrows Econtroller
-  AssertEqual g:vader_exception, 'Vim:E492: Not an editor command: Econtroller'
+  AssertEqual exists(':Econtroller'), 0
 
 Execute (the :Artisan command is not defined):
-  AssertThrows Artisan
-  AssertEqual g:vader_exception, 'Vim:E492: Not an editor command: Artisan'
+  AssertEqual exists(':Artisan'), 0

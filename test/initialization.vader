@@ -1,2 +1,6 @@
 Execute (sets guard variable):
   AssertEqual g:loaded_laravel, 1
+
+Execute (Laravel root is detected):
+  edit test/fixtures/laravel-8/.env
+  AssertEqual b:laravel_root, fnamemodify('test/fixtures/laravel-8', ':p:h')
