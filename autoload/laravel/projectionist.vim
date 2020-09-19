@@ -19,6 +19,9 @@ function! laravel#projectionist#append() abort
         \ 'bootstrap/*.php': {
         \   'type': 'bootstrap',
         \ },
+        \ 'bootstrap/app.php': {
+        \   'type': 'bootstrap',
+        \ },
         \ 'config/*.php': {
         \   'type': 'config',
         \   'template': [
@@ -144,6 +147,13 @@ function! laravel#projectionist#append() abort
         \ 'app/Exceptions/Handler.php': {
         \   'type': 'exception',
         \ },
+        \ 'app/Notifications/*.php': {
+        \   'type': 'notification',
+        \ },
+        \ 'app/Policies/*.php': {
+        \   'type': 'policy',
+        \   'alternate': 'app/Providers/AuthServiceProvider.php',
+        \ },
         \ 'app/Providers/*.php': {
         \   'type': 'provider',
         \ },
@@ -241,14 +251,14 @@ function! laravel#projectionist#append() abort
           \ }
   endif
 
-  if laravel#app().has('listeners')
-    let projections['app/Listeners/*.php'] = {
-          \   'type': 'listener',
-          \   'alternate': 'app/Events/{}.php',
-          \ }
-  elseif laravel#app().has('handlers')
+  if laravel#app().has('handlers')
     let projections['app/Handlers/*.php'] = {
           \   'type': 'handler',
+          \   'alternate': 'app/Events/{}.php',
+          \ }
+  else
+    let projections['app/Listeners/*.php'] = {
+          \   'type': 'listener',
           \   'alternate': 'app/Events/{}.php',
           \ }
   endif
@@ -268,19 +278,6 @@ function! laravel#projectionist#append() abort
           \     '    //',
           \     '{close}',
           \   ],
-          \ }
-  endif
-
-  if laravel#app().has('notifications')
-    let projections['app/Notifications/*.php'] = {
-          \   'type': 'notification',
-          \ }
-  endif
-
-  if laravel#app().has('policies')
-    let projections['app/Policies/*.php'] = {
-          \   'type': 'policy',
-          \   'alternate': 'app/Providers/AuthServiceProvider.php',
           \ }
   endif
 
