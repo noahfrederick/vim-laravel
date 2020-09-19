@@ -1,0 +1,69 @@
+Before (in a laravel 8 buffer):
+  edit test/fixtures/laravel-8/.env
+
+After (clean up empty dirs):
+  !find . -type d -empty -delete
+
+Execute (has framework):
+  AssertEqual laravel#app().has('lumen'), 0
+  AssertEqual laravel#app().has('laravel'), 1
+
+Execute (has version):
+  AssertEqual laravel#app().has('laravel 7'), 0
+  AssertEqual laravel#app().has('laravel 8'), 1
+  AssertEqual laravel#app().has('laravel == 7'), 0
+  AssertEqual laravel#app().has('laravel == 8'), 1
+
+Execute (has version range):
+  AssertEqual laravel#app().has('laravel < 7'), 0
+  AssertEqual laravel#app().has('laravel > 7'), 1
+
+Execute (has feature artisan):
+  AssertEqual laravel#app().has('artisan'), 1
+
+Execute (has feature blade):
+  AssertEqual laravel#app().has('blade'), 1
+
+Execute (has feature commands):
+  AssertEqual laravel#app().has('commands'), 0
+
+Execute (has feature dotenv):
+  AssertEqual laravel#app().has('dotenv'), 1
+
+Execute (has feature gulp):
+  AssertEqual laravel#app().has('gulp'), 0
+
+Execute (has feature handlers):
+  AssertEqual laravel#app().has('handlers'), 0
+
+Execute (has feature jobs):
+  AssertEqual laravel#app().has('jobs'), 0
+
+Execute (has feature listeners):
+  AssertEqual laravel#app().has('listeners'), 0
+
+Execute (has feature mail):
+  AssertEqual laravel#app().has('mail'), 0
+
+Execute (has feature models):
+  AssertEqual laravel#app().has('models'), 1
+
+Execute (has feature namespaced-tests):
+  AssertEqual laravel#app().has('namespaced-tests'), 1
+
+Execute (has feature notifications):
+  AssertEqual laravel#app().has('notifications'), 0
+
+Execute (has feature policies):
+  AssertEqual laravel#app().has('policies'), 0
+
+Execute (has feature scopes):
+  AssertEqual laravel#app().has('scopes'), 0
+
+Execute (has feature traits):
+  AssertEqual laravel#app().has('traits'), 0
+
+Execute (has arbitrary path):
+  AssertEqual laravel#app().has('app/DoesNotExist'), 0
+  AssertEqual laravel#app().has('app/Http'), 1
+  AssertEqual laravel#app().has('app/Http|app/DoesNotExist'), 1

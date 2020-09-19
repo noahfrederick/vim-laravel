@@ -214,13 +214,13 @@ function! s:has_framework(feature)
   elseif name == 'lumen'
     let package = 'laravel/lumen-framework'
   else
-    return v:false
+    return 0
   endif
 
   try
-    return composer#project().is_installed(package, comparator, ver)
+    return !!composer#project().is_installed(package, comparator, ver)
   catch /^Vim\%((\a\+)\)\=:E117/
-    return v:false
+    return 0
   endtry
 endfunction
 
