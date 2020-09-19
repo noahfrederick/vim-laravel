@@ -2,7 +2,7 @@ Before (in a laravel 8 buffer):
   edit test/fixtures/laravel-8/.env
 
 After (clean up empty dirs):
-  !find . -type d -empty -delete
+  silent !find . -type d -empty -delete
 
 Execute (has framework):
   AssertEqual laravel#app().has('lumen'), 0

@@ -1,0 +1,163 @@
+Before (in a laravel buffer):
+  edit test/fixtures/laravel-8/.env
+  execute 'cd' b:laravel_root
+
+Execute (edit bootstrap file):
+  Elib Foo/Bar
+  AssertEqual expand('%'), 'app/Foo/Bar.php'
+
+Execute (edit bootstrap file):
+  Ebootstrap example
+  AssertEqual expand('%'), 'bootstrap/example.php'
+
+Execute (edit default bootstrap file):
+  Ebootstrap
+  AssertEqual expand('%'), 'bootstrap/app.php'
+
+Execute (edit config file):
+  Econfig example
+  AssertEqual expand('%'), 'config/example.php'
+
+Execute (edit default config file):
+  Econfig
+  AssertEqual expand('%'), 'config/app.php'
+
+Execute (edit channel):
+  Echannel Example
+  AssertEqual expand('%'), 'app/Broadcasting/Example.php'
+
+Execute (edit controller):
+  Econtroller ExampleController
+  AssertEqual expand('%'), 'app/Http/Controllers/ExampleController.php'
+
+Execute (edit default controller):
+  Econtroller
+  AssertEqual expand('%'), 'app/Http/Controllers/Controller.php'
+
+Execute (edit mail):
+  Email Example
+  AssertEqual expand('%'), 'app/Mail/Example.php'
+
+Execute (edit middleware):
+  Emiddleware Example
+  AssertEqual expand('%'), 'app/Http/Middleware/Example.php'
+
+Execute (edit default middleware):
+  Emiddleware
+  AssertEqual expand('%'), 'app/Http/Kernel.php'
+
+Execute (edit request):
+  Erequest Example
+  AssertEqual expand('%'), 'app/Http/Requests/Example.php'
+
+Execute (edit resource):
+  Eresource Example
+  AssertEqual expand('%'), 'app/Http/Resources/Example.php'
+
+Execute (edit rule):
+  Erule Example
+  AssertEqual expand('%'), 'app/Rules/Example.php'
+
+Execute (edit event):
+  Eevent Example
+  AssertEqual expand('%'), 'app/Events/Example.php'
+
+Execute (edit default event):
+  Eevent
+  AssertEqual expand('%'), 'app/Events/Event.php'
+
+Execute (edit exception):
+  Eexception Example
+  AssertEqual expand('%'), 'app/Exceptions/Example.php'
+
+Execute (edit default exception):
+  Eexception
+  AssertEqual expand('%'), 'app/Exceptions/Handler.php'
+
+Execute (edit provider):
+  Eprovider Example
+  AssertEqual expand('%'), 'app/Providers/Example.php'
+
+Execute (edit factory):
+  Efactory Example
+  AssertEqual expand('%'), 'database/factories/Example.php'
+
+Execute (edit default factory):
+  Efactory
+  AssertEqual expand('%'), 'database/factories/ModelFactory.php'
+
+Execute (edit migration):
+  Emigration example
+  AssertEqual expand('%'), 'database/migrations/example.php'
+
+Execute (edit seeder):
+  Eseeder Example
+  AssertEqual expand('%'), 'database/seeds/Example.php'
+
+Execute (edit default seeder):
+  Eseeder
+  AssertEqual expand('%'), 'database/seeds/DatabaseSeeder.php'
+
+Execute (edit test):
+  Etest Example
+  AssertEqual expand('%'), 'tests/Example.php'
+
+Execute (edit default test):
+  Etest
+  AssertEqual expand('%'), 'tests/TestCase.php'
+
+Execute (edit language file):
+  Elanguage example
+  AssertEqual expand('%'), 'resources/lang/example.php'
+
+Execute (edit asset file):
+  Easset example.ext
+  AssertEqual expand('%'), 'resources/assets/example.ext'
+
+Execute (edit README):
+  Edoc
+  AssertEqual expand('%'), 'README.md'
+
+Execute (edit view):
+  Eview example
+  AssertEqual expand('%'), 'resources/views/example.blade.php'
+
+Execute (edit env file):
+  Eenv
+  AssertEqual expand('%'), '.env.example'
+
+Execute (edit job):
+  Ejob Example
+  AssertEqual expand('%'), 'app/Jobs/Example.php'
+
+Execute (edit default job):
+  Ejob
+  AssertEqual expand('%'), 'app/Jobs/Job.php'
+
+Execute (edit command):
+  Ecommand Example
+  AssertEqual expand('%'), 'app/Console/Commands/Example.php'
+
+Execute (edit default command):
+  Ecommand
+  AssertEqual expand('%'), 'app/Console/Kernel.php'
+
+Execute (edit listener):
+  Elistener Example
+  AssertEqual expand('%'), 'app/Listeners/Example.php'
+
+Execute (edit model):
+  Emodel Example
+  AssertEqual expand('%'), 'app/Models/Example.php'
+
+Execute (edit notification):
+  Enotification Example
+  AssertEqual expand('%'), 'app/Notifications/Example.php'
+
+Execute (edit policy):
+  Epolicy Example
+  AssertEqual expand('%'), 'app/Policies/Example.php'
+
+Execute (edit routes):
+  Eroutes example
+  AssertEqual expand('%'), 'routes/example.php'
