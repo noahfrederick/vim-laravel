@@ -22,9 +22,17 @@ Execute (edit default config file):
   Econfig
   AssertEqual expand('%'), 'config/app.php'
 
+Execute (edit cast):
+  Ecast Example
+  AssertEqual expand('%'), 'app/Casts/Example.php'
+
 Execute (edit channel):
   Echannel Example
   AssertEqual expand('%'), 'app/Broadcasting/Example.php'
+
+Execute (edit view component):
+  Ecomponent Example
+  AssertEqual expand('%'), 'app/View/Components/Example.php'
 
 Execute (edit controller):
   Econtroller ExampleController
@@ -80,7 +88,7 @@ Execute (edit provider):
 
 Execute (edit factory):
   Efactory Example
-  AssertEqual expand('%'), 'database/factories/Example.php'
+  AssertEqual expand('%'), 'database/factories/ExampleFactory.php'
 
 Execute (edit default factory):
   Efactory
@@ -124,7 +132,7 @@ Execute (edit view):
 
 Execute (edit env file):
   Eenv
-  AssertEqual expand('%'), '.env.example'
+  AssertEqual expand('%'), '.env'
 
 Execute (edit job):
   Ejob Example
@@ -153,6 +161,10 @@ Execute (edit model):
 Execute (edit notification):
   Enotification Example
   AssertEqual expand('%'), 'app/Notifications/Example.php'
+
+Execute (edit observer):
+  Eobserver Example
+  AssertEqual expand('%'), 'app/Observers/Example.php'
 
 Execute (edit policy):
   Epolicy Example

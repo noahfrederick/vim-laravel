@@ -36,26 +36,11 @@ Execute (has feature gulp):
 Execute (has feature handlers):
   AssertEqual laravel#app().has('handlers'), 0
 
-Execute (has feature jobs):
-  AssertEqual laravel#app().has('jobs'), 0
-
-Execute (has feature listeners):
-  AssertEqual laravel#app().has('listeners'), 0
-
-Execute (has feature mail):
-  AssertEqual laravel#app().has('mail'), 0
-
 Execute (has feature models):
   AssertEqual laravel#app().has('models'), 1
 
 Execute (has feature namespaced-tests):
   AssertEqual laravel#app().has('namespaced-tests'), 1
-
-Execute (has feature notifications):
-  AssertEqual laravel#app().has('notifications'), 0
-
-Execute (has feature policies):
-  AssertEqual laravel#app().has('policies'), 0
 
 Execute (has feature scopes):
   AssertEqual laravel#app().has('scopes'), 0
