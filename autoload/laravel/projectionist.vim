@@ -51,6 +51,24 @@ function! laravel#projectionist#append() abort
         \ 'app/Broadcasting/*.php': {
         \   'type': 'channel',
         \ },
+        \ 'app/Casts/*.php': {
+        \   'type': 'cast',
+        \   'template': [
+        \     '<?php',
+        \     '',
+        \     'namespace {namespace};',
+        \     '',
+        \     'use Illuminate\Contracts\Database\Eloquent\CastsAttributes;',
+        \     '',
+        \     'class {basename} extends CastsAttributes',
+        \     '{open}',
+        \     '    //',
+        \     '{close}',
+        \   ],
+        \ },
+        \ 'app/View/Components/*.php': {
+        \   'type': 'component',
+        \ },
         \ 'app/Http/Controllers/*.php': {
         \   'type': 'controller',
         \   'template': [
@@ -150,6 +168,9 @@ function! laravel#projectionist#append() abort
         \ 'app/Notifications/*.php': {
         \   'type': 'notification',
         \ },
+        \ 'app/Observers/*.php': {
+        \   'type': 'observer',
+        \ },
         \ 'app/Policies/*.php': {
         \   'type': 'policy',
         \   'alternate': 'app/Providers/AuthServiceProvider.php',
@@ -157,7 +178,7 @@ function! laravel#projectionist#append() abort
         \ 'app/Providers/*.php': {
         \   'type': 'provider',
         \ },
-        \ 'database/factories/*.php': {
+        \ 'database/factories/*Factory.php': {
         \   'type': 'factory',
         \ },
         \ 'database/factories/ModelFactory.php': {
@@ -210,14 +231,13 @@ function! laravel#projectionist#append() abort
   endif
 
   if laravel#app().has('dotenv')
-    let projections['.env.example'] = {
-          \   'type': 'env',
-          \   'alternate': '.env',
-          \ }
-
     let projections['.env'] = {
           \   'type': 'env',
           \   'alternate': '.env.example',
+          \ }
+
+    let projections['.env.example'] = {
+          \   'alternate': '.env',
           \ }
   endif
 

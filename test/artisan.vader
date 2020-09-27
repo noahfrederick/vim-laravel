@@ -1,8 +1,106 @@
 Before (in a laravel buffer):
-  edit test/fixtures/laravel-8/.env
+  tabedit test/fixtures/laravel-8/.env
 
-Execute (generate model file):
+After (remove generated file):
+  call delete(expand('%'))
+  bdelete
+
+Execute (Create a new custom Eloquent cast class):
+  silent Artisan make:cast Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Casts/Example.php'
+
+Execute (Create a new channel class):
+  silent Artisan make:channel Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Broadcasting/Example.php'
+
+Execute (Create a new Artisan command):
+  silent Artisan make:command Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Console/Commands/Example.php'
+
+Execute (Create a new view component class):
+  silent Artisan make:component Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/View/Components/Example.php'
+
+Execute (Create a new controller class):
+  silent Artisan make:controller Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Http/Controllers/Example.php'
+
+Execute (Create a new event class):
+  silent Artisan make:event Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Events/Example.php'
+
+Execute (Create a new custom exception class):
+  silent Artisan make:exception Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Exceptions/Example.php'
+
+Execute (Create a new model factory):
+  silent Artisan make:factory Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/database/factories/ExampleFactory.php'
+
+Execute (Create a new job class):
+  silent Artisan make:job Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Jobs/Example.php'
+
+Execute (Create a new event listener class):
+  silent Artisan make:listener Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Listeners/Example.php'
+
+Execute (Create a new email class):
+  silent Artisan make:mail Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Mail/Example.php'
+
+Execute (Create a new middleware class):
+  silent Artisan make:middleware Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Http/Middleware/Example.php'
+
+Execute (Create a new migration file):
+  silent Artisan make:migration Example
+  Assert expand('%') =~# 'test/fixtures/laravel-8/database/migrations/.*_example.php'
+
+Execute (Create a new Eloquent model class):
   silent Artisan make:model Example
-
-Then (editing model file):
   AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Models/Example.php'
+
+Execute (Create a new notification class):
+  silent Artisan make:notification Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Notifications/Example.php'
+
+Execute (Create a new observer class):
+  silent Artisan make:observer Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Observers/Example.php'
+
+Execute (Create a new policy class):
+  silent Artisan make:policy Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Policies/Example.php'
+
+Execute (Create a new service provider class):
+  silent Artisan make:provider Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Providers/Example.php'
+
+Execute (Create a new form request class):
+  silent Artisan make:request Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Http/Requests/Example.php'
+
+Execute (Create a new resource):
+  silent Artisan make:resource Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Http/Resources/Example.php'
+
+Execute (Create a new validation rule):
+  silent Artisan make:rule Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/app/Rules/Example.php'
+
+Execute (Create a new seeder class):
+  silent Artisan make:seeder Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/database/seeds/Example.php'
+
+Execute (Create a new test class):
+  silent Artisan make:test Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/tests/Feature/Example.php'
+
+Execute (Create a new feature test class):
+  silent Artisan make:test Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/tests/Feature/Example.php'
+
+Execute (Create a new unit test class):
+  silent Artisan make:test --unit Example
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/tests/Unit/Example.php'
