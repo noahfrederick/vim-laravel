@@ -154,37 +154,57 @@ call s:add_methods('app', ['path', 'src_path', 'config_path', 'migrations_path',
 
 ""
 " Detect app's namespace
-function! s:app_detect_namespace() abort dict
-  try
-    let paths = composer#query('autoload.psr-4')
+function! s:app_namespaces() abort dict
+  let namespaces = {}
 
-    for [namespace, path] in items(paths)
-      if path ==# 'app/'
-        return namespace[0:-2]
-      endif
+  try
+    let composer = composer#project()
+
+    for [namespace, path] in items(composer.query('autoload.psr-4', {}))
+      let namespaces[path] = namespace[0:-2]
+    endfor
+
+    for [namespace, path] in items(composer.query('autoload-dev.psr-4', {}))
+      let namespaces[path] = namespace[0:-2]
     endfor
   catch /^Vim\%((\a\+)\)\=:E117/
-    " Fall through when composer.vim isn't available
+    " Fail gracefully when composer.vim isn't available.
+    let namespaces = {
+          \ 'app/': 'App',
+          \ 'database/factories/': 'Database\Factories',
+          \ 'database/seeders/': 'Database\Seeders',
+          \ 'tests/': 'Tests',
+          \ }
   endtry
 
-  return 'App'
+  return namespaces
 endfunction
 
 ""
 " Get app's namespace or namespace for file at [path]
 function! s:app_namespace(...) abort dict
-  if self.cache.needs('namespace')
-    call self.cache.set('namespace', self.detect_namespace())
+  if self.cache.needs('namespaces')
+    call self.cache.set('namespaces', self.namespaces())
   endif
 
-  let ns = [self.cache.get('namespace')]
+  let namespaces = self.cache.get('namespaces')
 
-  if a:0 == 1
-    let path = substitute(fnamemodify(a:1, ':p'), '\V\^' . self.src_path(), '', '')
-    let ns += split(path, '/')[0:-2]
+  if a:0 == 0
+    return namespaces['app/']
   endif
 
-  return join(ns, '\')
+  let path = substitute(fnamemodify(a:1, ':p'), '\V\^' . self.path() . '/', '', '')
+
+  for [prefix, namespace] in items(namespaces)
+    if path =~# '\V\^' . prefix
+      let path = substitute(path, '\V\^' . prefix, '', '')
+      let ns = [namespace] + split(path, '/')[0:-2]
+
+      return join(ns, '\')
+    endif
+  endfor
+
+  return ''
 endfunction
 
 ""
@@ -248,7 +268,7 @@ function! s:has_feature_by_path(app, feature)
   return !empty(filter(split(path, '|'), 'a:app.has_path(v:val)'))
 endfunction
 
-call s:add_methods('app', ['detect_namespace', 'namespace', 'has'])
+call s:add_methods('app', ['namespaces', 'namespace', 'has'])
 
 ""
 " Read first [n] lines of file at {path}.
