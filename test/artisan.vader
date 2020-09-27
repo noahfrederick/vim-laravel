@@ -91,7 +91,7 @@ Execute (Create a new validation rule):
 
 Execute (Create a new seeder class):
   silent Artisan make:seeder Example
-  AssertEqual expand('%'), 'test/fixtures/laravel-8/database/seeds/Example.php'
+  AssertEqual expand('%'), 'test/fixtures/laravel-8/database/seeders/Example.php'
 
 Execute (Create a new test class):
   silent Artisan make:test Example
