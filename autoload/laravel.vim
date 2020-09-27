@@ -159,7 +159,7 @@ function! s:app_detect_namespace() abort dict
     let paths = composer#query('autoload.psr-4')
 
     for [namespace, path] in items(paths)
-      if self.has_path(path)
+      if path ==# 'app/'
         return namespace[0:-2]
       endif
     endfor
