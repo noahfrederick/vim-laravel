@@ -10,11 +10,47 @@ function! g:projectionist_transformations.namespace(input, o) abort
 endfunction
 
 function! laravel#projectionist#append() abort
+  let templates = {
+        \ 'generic': [
+        \   '<?php',
+        \ ],
+        \ 'array': [
+        \   '<?php',
+        \   '',
+        \   'return [',
+        \   '    //',
+        \   '];',
+        \ ],
+        \ 'class': [
+        \   '<?php',
+        \   '',
+        \   'namespace {namespace};',
+        \   '',
+        \   'class {basename}',
+        \   '{open}',
+        \   '    //',
+        \   '{close}',
+        \ ],
+        \ 'trait': [
+        \   '<?php',
+        \   '',
+        \   'namespace {namespace};',
+        \   '',
+        \   'trait {basename}',
+        \   '{open}',
+        \   '    //',
+        \   '{close}',
+        \ ],
+        \ }
+
   let projections = {
         \ '*': {
         \   'start': 'homestead ssh',
         \   'console': [laravel#app().makeprg(), 'tinker'],
         \   'framework': 'laravel',
+        \ },
+        \ '*.php': {
+        \   'template': templates.generic,
         \ },
         \ 'bootstrap/*.php': {
         \   'type': 'bootstrap',
@@ -24,94 +60,32 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'config/*.php': {
         \   'type': 'config',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'return [',
-        \     '    //',
-        \     '];',
-        \   ],
+        \   'template': templates.array,
         \ },
         \ 'config/app.php': {
         \   'type': 'config',
         \ },
         \ 'app/*.php': {
         \   'type': 'lib',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'namespace {namespace};',
-        \     '',
-        \     'class {basename}',
-        \     '{open}',
-        \     '    //',
-        \     '{close}',
-        \   ],
+        \   'template': templates.class,
         \ },
         \ 'app/Broadcasting/*.php': {
         \   'type': 'channel',
         \ },
         \ 'app/Casts/*.php': {
         \   'type': 'cast',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'namespace {namespace};',
-        \     '',
-        \     'use Illuminate\Contracts\Database\Eloquent\CastsAttributes;',
-        \     '',
-        \     'class {basename} extends CastsAttributes',
-        \     '{open}',
-        \     '    //',
-        \     '{close}',
-        \   ],
         \ },
         \ 'app/View/Components/*.php': {
         \   'type': 'component',
         \ },
         \ 'app/Http/Controllers/*.php': {
         \   'type': 'controller',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'namespace {namespace};',
-        \     '',
-        \     'class {basename} extends Controller',
-        \     '{open}',
-        \     '    //',
-        \     '{close}',
-        \   ],
         \ },
         \ 'app/Http/Controllers/Controller.php': {
         \   'type': 'controller',
         \ },
         \ 'app/Mail/*.php': {
         \   'type': 'mail',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'namespace {namespace};',
-        \     '',
-        \     'use Illuminate\Bus\Queueable;',
-        \     'use Illuminate\Mail\Mailable;',
-        \     'use Illuminate\Queue\SerializesModels;',
-        \     'use Illuminate\Contracts\Queue\ShouldQueue;',
-        \     '',
-        \     'class {basename} extends Mailable',
-        \     '{open}',
-        \     '    use Queueable, SerializesModels;',
-        \     '',
-        \     '    /**',
-        \     '     * Build the message.',
-        \     '     *',
-        \     '     * @return $this',
-        \     '     */',
-        \     '    public function build()',
-        \     '    {open}',
-        \     '        //',
-        \     '    {close}',
-        \     '{close}',
-        \   ],
         \ },
         \ 'app/Http/Middleware/*.php': {
         \   'type': 'middleware',
@@ -121,36 +95,12 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'app/Http/Requests/*.php': {
         \   'type': 'request',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'namespace {namespace};',
-        \     '',
-        \     'use Illuminate\Foundation\Http\FormRequest;',
-        \     '',
-        \     'class {basename} extends FormRequest',
-        \     '{open}',
-        \     '    //',
-        \     '{close}',
-        \   ],
         \ },
         \ 'app/Http/Resources/*.php': {
         \   'type': 'resource',
         \ },
         \ 'app/Rules/*.php': {
         \   'type': 'rule',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'namespace {namespace};',
-        \     '',
-        \     'use Illuminate\Contracts\Validation\Rule;',
-        \     '',
-        \     'class {basename} implements Rule',
-        \     '{open}',
-        \     '    //',
-        \     '{close}',
-        \   ],
         \ },
         \ 'app/Events/*.php': {
         \   'type': 'event',
@@ -178,6 +128,9 @@ function! laravel#projectionist#append() abort
         \ 'app/Providers/*.php': {
         \   'type': 'provider',
         \ },
+        \ 'database/*.php': {
+        \   'template': templates.class,
+        \ },
         \ 'database/factories/*Factory.php': {
         \   'type': 'factory',
         \ },
@@ -186,15 +139,11 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'database/migrations/*.php': {
         \   'type': 'migration',
-        \ },
-        \ 'database/seeds/*.php': {
-        \   'type': 'seeder',
-        \ },
-        \ 'database/seeds/DatabaseSeeder.php': {
-        \   'type': 'seeder',
+        \   'template': templates.generic,
         \ },
         \ 'tests/*.php': {
         \   'type': 'test',
+        \   'template': templates.class,
         \ },
         \ 'tests/TestCase.php': {
         \   'type': 'test',
@@ -205,13 +154,7 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'resources/lang/*.php': {
         \   'type': 'language',
-        \   'template': [
-        \     '<?php',
-        \     '',
-        \     'return [',
-        \     '    //',
-        \     '];',
-        \   ],
+        \   'template': templates.array,
         \ },
         \ 'resources/assets/*': {
         \   'type': 'asset',
@@ -286,18 +229,23 @@ function! laravel#projectionist#append() abort
   if laravel#app().has('models')
     let projections['app/Models/*.php'] = {
           \   'type': 'model',
-          \   'template': [
-          \     '<?php',
-          \     '',
-          \     'namespace {namespace};',
-          \     '',
-          \     'use Illuminate\Database\Eloquent\Model;',
-          \     '',
-          \     'class {basename} extends Model',
-          \     '{open}',
-          \     '    //',
-          \     '{close}',
-          \   ],
+          \ }
+  endif
+
+  " In Laravel 8, the seeds/ directory was renamed to seeders/.
+  if laravel#app().has('database/seeds/')
+    let projections['database/seeds/*.php'] = {
+          \   'type': 'seeder',
+          \ }
+    let projections['database/seeds/DatabaseSeeder.php'] = {
+          \   'type': 'seeder',
+          \ }
+  else
+    let projections['database/seeders/*.php'] = {
+          \   'type': 'seeder',
+          \ }
+    let projections['database/seeders/DatabaseSeeder.php'] = {
+          \   'type': 'seeder',
           \ }
   endif
 
@@ -346,16 +294,7 @@ function! laravel#projectionist#append() abort
   if laravel#app().has('traits')
     let projections['app/Traits/*.php'] = {
           \   'type': 'trait',
-          \   'template': [
-          \     '<?php',
-          \     '',
-          \     'namespace {namespace};',
-          \     '',
-          \     'trait {basename}',
-          \     '{open}',
-          \     '    //',
-          \     '{close}',
-          \   ],
+          \   'template': templates.trait,
           \ }
   endif
 

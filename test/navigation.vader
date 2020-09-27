@@ -2,13 +2,28 @@ Before (in a laravel buffer):
   edit test/fixtures/laravel-8/.env
   execute 'cd' b:laravel_root
 
-Execute (edit bootstrap file):
+Execute (edit arbitrary file):
   Elib Foo/Bar
   AssertEqual expand('%'), 'app/Foo/Bar.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Foo;
+
+  class Bar
+  {
+      //
+  }
 
 Execute (edit bootstrap file):
   Ebootstrap example
   AssertEqual expand('%'), 'bootstrap/example.php'
+  set expandtab shiftwidth=4
+
+Expect (generic template):
+  <?php
 
 Execute (edit default bootstrap file):
   Ebootstrap
@@ -17,6 +32,14 @@ Execute (edit default bootstrap file):
 Execute (edit config file):
   Econfig example
   AssertEqual expand('%'), 'config/example.php'
+  set expandtab shiftwidth=4
+
+Expect (array template):
+  <?php
+
+  return [
+      //
+  ];
 
 Execute (edit default config file):
   Econfig
@@ -25,18 +48,62 @@ Execute (edit default config file):
 Execute (edit cast):
   Ecast Example
   AssertEqual expand('%'), 'app/Casts/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Casts;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit channel):
   Echannel Example
   AssertEqual expand('%'), 'app/Broadcasting/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Broadcasting;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit view component):
   Ecomponent Example
   AssertEqual expand('%'), 'app/View/Components/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\View\Components;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit controller):
-  Econtroller ExampleController
-  AssertEqual expand('%'), 'app/Http/Controllers/ExampleController.php'
+  Econtroller Example
+  AssertEqual expand('%'), 'app/Http/Controllers/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Http\Controllers;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default controller):
   Econtroller
@@ -45,10 +112,32 @@ Execute (edit default controller):
 Execute (edit mail):
   Email Example
   AssertEqual expand('%'), 'app/Mail/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Mail;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit middleware):
   Emiddleware Example
   AssertEqual expand('%'), 'app/Http/Middleware/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Http\Middleware;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default middleware):
   Emiddleware
@@ -57,18 +146,62 @@ Execute (edit default middleware):
 Execute (edit request):
   Erequest Example
   AssertEqual expand('%'), 'app/Http/Requests/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Http\Requests;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit resource):
   Eresource Example
   AssertEqual expand('%'), 'app/Http/Resources/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Http\Resources;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit rule):
   Erule Example
   AssertEqual expand('%'), 'app/Rules/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Rules;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit event):
   Eevent Example
   AssertEqual expand('%'), 'app/Events/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Events;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default event):
   Eevent
@@ -77,6 +210,17 @@ Execute (edit default event):
 Execute (edit exception):
   Eexception Example
   AssertEqual expand('%'), 'app/Exceptions/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Exceptions;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default exception):
   Eexception
@@ -85,10 +229,32 @@ Execute (edit default exception):
 Execute (edit provider):
   Eprovider Example
   AssertEqual expand('%'), 'app/Providers/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Providers;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit factory):
   Efactory Example
   AssertEqual expand('%'), 'database/factories/ExampleFactory.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace Database\Factories;
+
+  class ExampleFactory
+  {
+      //
+  }
 
 Execute (edit default factory):
   Efactory
@@ -97,18 +263,44 @@ Execute (edit default factory):
 Execute (edit migration):
   Emigration example
   AssertEqual expand('%'), 'database/migrations/example.php'
+  set expandtab shiftwidth=4
+
+Expect (generic template):
+  <?php
 
 Execute (edit seeder):
   Eseeder Example
-  AssertEqual expand('%'), 'database/seeds/Example.php'
+  AssertEqual expand('%'), 'database/seeders/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace Database\Seeders;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default seeder):
   Eseeder
-  AssertEqual expand('%'), 'database/seeds/DatabaseSeeder.php'
+  AssertEqual expand('%'), 'database/seeders/DatabaseSeeder.php'
 
 Execute (edit test):
   Etest Example
   AssertEqual expand('%'), 'tests/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace Tests;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default test):
   Etest
@@ -117,10 +309,22 @@ Execute (edit default test):
 Execute (edit language file):
   Elanguage example
   AssertEqual expand('%'), 'resources/lang/example.php'
+  set expandtab shiftwidth=4
+
+Expect (array template):
+  <?php
+
+  return [
+      //
+  ];
 
 Execute (edit asset file):
   Easset example.ext
   AssertEqual expand('%'), 'resources/assets/example.ext'
+  set expandtab shiftwidth=4
+
+Expect (empty template):
+  
 
 Execute (edit README):
   Edoc
@@ -129,6 +333,10 @@ Execute (edit README):
 Execute (edit view):
   Eview example
   AssertEqual expand('%'), 'resources/views/example.blade.php'
+  set expandtab shiftwidth=4
+
+Expect (generic template):
+  <?php
 
 Execute (edit env file):
   Eenv
@@ -137,6 +345,17 @@ Execute (edit env file):
 Execute (edit job):
   Ejob Example
   AssertEqual expand('%'), 'app/Jobs/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Jobs;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default job):
   Ejob
@@ -145,6 +364,17 @@ Execute (edit default job):
 Execute (edit command):
   Ecommand Example
   AssertEqual expand('%'), 'app/Console/Commands/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Console\Commands;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit default command):
   Ecommand
@@ -153,23 +383,82 @@ Execute (edit default command):
 Execute (edit listener):
   Elistener Example
   AssertEqual expand('%'), 'app/Listeners/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Listeners;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit model):
   Emodel Example
   AssertEqual expand('%'), 'app/Models/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Models;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit notification):
   Enotification Example
   AssertEqual expand('%'), 'app/Notifications/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Notifications;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit observer):
   Eobserver Example
   AssertEqual expand('%'), 'app/Observers/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Observers;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit policy):
   Epolicy Example
   AssertEqual expand('%'), 'app/Policies/Example.php'
+  set expandtab shiftwidth=4
+
+Expect (class template):
+  <?php
+
+  namespace App\Policies;
+
+  class Example
+  {
+      //
+  }
 
 Execute (edit routes):
   Eroutes example
   AssertEqual expand('%'), 'routes/example.php'
+  set expandtab shiftwidth=4
+
+Expect (generic template):
+  <?php
