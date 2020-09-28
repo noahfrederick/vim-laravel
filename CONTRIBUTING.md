@@ -2,15 +2,15 @@
 
 ## Testing
 
-Tests are written for [vspec][vspec], which can be installed via
-[vim-flavor][vim-flavor]:
+Tests are written for [vader.vim][vader].
+The test suite can be run via the rake task:
 
 	bundle install
-	bundle exec vim-flavor install
-
-The test suite can then be run via the rake task:
-
 	bundle exec rake test
+
+Or by specifying the tests to run on the command line:
+
+    vim -c "Vader! test/*"
 
 ## Documentation
 
@@ -22,6 +22,5 @@ The help doc can be rebuilt by running:
 
 	bundle exec rake doc
 
-[vspec]: https://github.com/kana/vim-vspec
-[vim-flavor]: https://github.com/kana/vim-flavor
+[vader]: https://github.com/junegunn/vader.vim
 [vimdoc]: https://github.com/google/vimdoc
