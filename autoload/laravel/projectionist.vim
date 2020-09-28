@@ -71,6 +71,7 @@ function! laravel#projectionist#append() abort
         \ },
         \ 'app/Broadcasting/*.php': {
         \   'type': 'channel',
+        \   'related': 'app/Providers/BroadcastServiceProvider.php',
         \ },
         \ 'app/Casts/*.php': {
         \   'type': 'cast',
@@ -105,6 +106,7 @@ function! laravel#projectionist#append() abort
         \ 'app/Events/*.php': {
         \   'type': 'event',
         \   'alternate': 'app/Listeners/{}.php',
+        \   'related': 'app/Providers/EventServiceProvider.php',
         \ },
         \ 'app/Events/Event.php': {
         \   'type': 'event',
@@ -253,11 +255,13 @@ function! laravel#projectionist#append() abort
     let projections['routes/*.php'] = {
           \   'type': 'routes',
           \   'alternate': 'app/Http/Kernel.php',
+          \   'related': 'app/Providers/RouteServiceProvider.php',
           \ }
   else
     let projections['app/Http/routes.php'] = {
           \   'type': 'routes',
           \   'alternate': 'app/Http/Kernel.php',
+          \   'related': 'app/Providers/RouteServiceProvider.php',
           \ }
   endif
 
