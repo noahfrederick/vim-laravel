@@ -45,7 +45,7 @@ function! laravel#projectionist#append() abort
 
   let projections = {
         \ '*': {
-        \   'start': 'homestead ssh',
+        \   'start': [laravel#app().makeprg(), 'serve'],
         \   'console': [laravel#app().makeprg(), 'tinker'],
         \   'framework': 'laravel',
         \ },
