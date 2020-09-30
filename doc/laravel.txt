@@ -1,4 +1,4 @@
-*laravel.txt*	Vim support for Laravel/Lumen 5+ projects
+*laravel.txt*	Vim support for Laravel/Lumen projects
 Noah Frederick                                         *Laravel.vim* *laravel*
 
 ==============================================================================

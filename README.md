@@ -1,6 +1,6 @@
 # ![Laravel.vim](https://noahfrederick.com/pi/vim-laravel-888by140-40a40a.png)
 
-Vim support for [Laravel/Lumen 5+][laravel] projects.
+Vim support for [Laravel/Lumen][laravel] projects.
 
 [![Build Status][buildimg]](https://travis-ci.org/noahfrederick/vim-laravel)
 [![Release][release]](https://github.com/noahfrederick/vim-laravel/releases)
