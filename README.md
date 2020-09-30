@@ -25,16 +25,18 @@ Vim support for [Laravel/Lumen 5+][laravel] projects.
 
 ## Installation
 
-Laravel.vim has optional dependencies on [composer.vim][vim-composer],
-[dispatch.vim][dispatch] (the `:Console` command),
-[projectionist.vim][projectionist] (navigation commands), and
-[nvim-completion-manager][ncm] (insert-mode completion):
+Laravel.vim depends on a few other plug-ins for optional features, including
+[composer.vim][vim-composer], [dispatch.vim][dispatch], and
+[projectionist.vim][projectionist]:
 
 	Plug 'tpope/vim-dispatch'             "| Optional
 	Plug 'tpope/vim-projectionist'        "|
-	Plug 'roxma/nvim-completion-manager'  "|
 	Plug 'noahfrederick/vim-composer'     "|
 	Plug 'noahfrederick/vim-laravel'
+
+See the [full list of requirements and integrations][wiki-requirements].
+
+[wiki-requirements]: https://github.com/noahfrederick/vim-laravel/wiki/Requirements
 
 ## Credits and License
 
@@ -46,5 +48,4 @@ See `:help license`.
 [vim-composer]: https://github.com/noahfrederick/vim-composer
 [projectionist]: https://github.com/tpope/vim-projectionist
 [dispatch]: https://github.com/tpope/vim-dispatch
-[ncm]: https://github.com/roxma/nvim-completion-manager
 [rails]: https://github.com/tpope/vim-rails
