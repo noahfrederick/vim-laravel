@@ -2,14 +2,14 @@
 
 Vim support for [Laravel/Lumen][laravel] projects.
 
-[![Build Status][buildimg]](https://travis-ci.org/noahfrederick/vim-laravel)
 [![Release][release]](https://github.com/noahfrederick/vim-laravel/releases)
+[![Build Status][buildimg]](https://travis-ci.org/noahfrederick/vim-laravel)
 
 > :warning: This is a prerelease version, which may introduce breaking changes.
 
 [laravel]:  https://laravel.com/
+[release]:  https://img.shields.io/github/v/release/noahfrederick/vim-laravel.svg
 [buildimg]: https://img.shields.io/travis/noahfrederick/vim-laravel/master.svg
-[release]:  https://img.shields.io/github/tag/noahfrederick/vim-laravel.svg?maxAge=2592000
 
 ## Features
 
