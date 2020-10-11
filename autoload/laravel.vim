@@ -26,7 +26,8 @@ endfunction
 ""
 " Get Funcref from script-local function {name}.
 function! s:function(name) abort
-  return function(substitute(a:name, '^s:', matchstr(expand('<sfile>'), '<SNR>\d\+_'), ''))
+  let func_name = split(expand('<sfile>'), '\.\.')[-1]
+  return function(substitute(a:name, '^s:', matchstr(func_name, '<SNR>\d\+_'), ''))
 endfunction
 
 ""
