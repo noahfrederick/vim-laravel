@@ -436,7 +436,13 @@ function! s:app_makeprg(...) abort dict
     let args = []
   endif
 
-  return join(['php', 'artisan'] + args)
+  let makeprg = get(g:, 'laravel_artisan', ['php', 'artisan'])
+
+  if type(makeprg) != type([])
+    let makeprg = [makeprg]
+  endif
+
+  return join(makeprg + args)
 endfunction
 
 ""
