@@ -405,9 +405,12 @@ Expect (class template):
 
   namespace App\Models;
 
-  class Example
+  use Illuminate\Database\Eloquent\Factories\HasFactory;
+  use Illuminate\Database\Eloquent\Model;
+
+  class Example extends Model
   {
-      //
+      use HasFactory;
   }
 
 Execute (edit notification):
@@ -462,3 +465,27 @@ Execute (edit routes):
 
 Expect (generic template):
   <?php
+
+Before (blade file with __() function):
+  tabedit test/fixtures/laravel-8/resources/views/viewfile.blade.php
+
+Do (Move to (a)uth.failed, jump to translation file):
+  i{{ __('auth.failed') }}\<Esc>0fagf
+
+Execute:
+  AssertEqual expand('%'), 'resources/lang/auth.php'
+
+After (clean up buffer):
+  bdelete
+
+Before (blade file with trans() function):
+  tabedit test/fixtures/laravel-8/resources/views/viewfile2.blade.php
+
+Do (Move to (a)uth.failed, jump to translation file):
+  i{{ trans('auth.failed') }}\<Esc>0fafagf
+
+Execute:
+  AssertEqual expand('%'), 'resources/lang/auth.php'
+
+After (clean up buffer):
+  bdelete

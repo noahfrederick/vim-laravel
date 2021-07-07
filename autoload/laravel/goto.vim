@@ -91,9 +91,9 @@ endfunction
 
 ""
 " @private
-" Capture language name at cursor
+" Capture language name at cursor using trans(), trans_choice() and __() method
 function! laravel#goto#language() abort
-  return s:find_name('\<trans\%(_choice\)\?([''"]\([^''".]\+\)[^''"]*[''"][,)].*$')
+  return s:find_name('\<\%\(__\|trans\%(_choice\)\?\)([''"]\([^''".]\+\)[^''"]*[''"][,)].*$')
 endfunction
 
 ""
