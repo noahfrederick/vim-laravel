@@ -18,6 +18,7 @@ Vim support for [Laravel/Lumen][laravel] projects.
 * Navigation commands such as `:Econtroller`, `:Eroutes`, `:Etest` and [many more][wiki-navigation].
 * Enhanced `gf` command works on class names, template names, config and translation keys.
 * Complete view/route names in insert mode.
+* Interact with a Homestead guest VM from the host machine using `:Homestead`.
 * Use `:Console` to fire up a REPL (`artisan tinker`).
 * Use `:Start` to serve the app locally (`artisan serve`).
 
