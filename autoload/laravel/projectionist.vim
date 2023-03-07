@@ -133,7 +133,7 @@ function! laravel#projectionist#append() abort
         \ 'database/*.php': {
         \   'template': templates.class,
         \ },
-        \ 'database/factories/*Factory.php': {
+        \ 'database/factories/*.php': {
         \   'type': 'factory',
         \ },
         \ 'database/factories/ModelFactory.php': {
