@@ -242,7 +242,7 @@ Expect (class template):
   }
 
 Execute (edit factory):
-  Efactory Example
+  Efactory ExampleFactory
   AssertEqual expand('%'), 'database/factories/ExampleFactory.php'
   set expandtab shiftwidth=4
 
